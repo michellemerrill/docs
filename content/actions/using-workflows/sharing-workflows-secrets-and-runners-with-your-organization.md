@@ -1,6 +1,6 @@
 ---
 title: 'Sharing workflows, secrets, and runners with your organization'
-shortTitle: Sharing workflows with your organization
+shortTitle: Share workflows with your organization
 intro: 'Learn how you can use organization features to collaborate with your team, by sharing starter workflows, secrets, and self-hosted runners.'
 redirect_from:
   - /actions/learn-github-actions/sharing-workflows-with-your-organization
@@ -20,21 +20,21 @@ type: how_to
 
 If you need to share workflows and other {% data variables.product.prodname_actions %} features with your team, then consider collaborating within a {% data variables.product.prodname_dotcom %} organization. An organization allows you to centrally store and manage secrets, artifacts, and self-hosted runners. You can also create starter workflows in the `.github` repository and share them with other users in your organization.
 
-## Sharing {% if internal-actions %}actions and {% endif %}workflows
+## Sharing {% ifversion internal-actions %}actions and {% endif %}workflows
 
-{% if internal-actions %}
+{% ifversion internal-actions %}
 You can share both individual actions and entire workflows with your organization, with or without publishing the actions or workflows publicly. You can reuse actions and workflows exactly by referencing them in your workflow file, and you can create starter workflows that provide templates for new workflows.
 {% else %}
 Your organization can share workflows by reusing the workflows exactly or by creating starter workflows that provide templates for new workflows.
 {% endif %}
 
-{% if internal-actions %}
+{% ifversion internal-actions %}
 ### Sharing actions with your enterprise
 
 {% data reusables.actions.internal-actions-summary %}
 {% endif %}
 
-{% ifversion fpt or ghes > 3.3 or ghae-issue-4757 or ghec %}
+{% ifversion fpt or ghes > 3.3 or ghae > 3.3 or ghec %}
 ### Reusing workflows
 
 {% data reusables.actions.reusable-workflows %}
@@ -50,11 +50,11 @@ You can centrally manage your secrets within an organization, and then make them
 
 When creating a secret in an organization, you can use a policy to limit which repositories can access that secret. For example, you can grant access to all repositories, or limit access to only private repositories or a specified list of repositories.
 
-{% data reusables.github-actions.permissions-statement-secrets-organization %}
+{% data reusables.actions.permissions-statement-secrets-organization %}
 
 {% data reusables.organizations.navigate-to-org %}
 {% data reusables.organizations.org_settings %}
-{% data reusables.github-actions.sidebar-secret %}
+{% data reusables.actions.sidebar-secret %}
 1. Click **New secret**.
 1. Type a name for your secret in the **Name** input box.
 1. Enter the **Value** for your secret.

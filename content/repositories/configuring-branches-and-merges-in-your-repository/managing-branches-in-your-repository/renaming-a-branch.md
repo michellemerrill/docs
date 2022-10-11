@@ -4,7 +4,7 @@ intro: You can change the name of a branch in a repository.
 permissions: 'People with write permissions to a repository can rename a branch in the repository unless it is the [default branch](/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-branches#about-the-default-branch){% ifversion fpt or ghec or ghes > 3.3 %} or a [protected branch](/repositories/configuring-branches-and-merges-in-your-repository/defining-the-mergeability-of-pull-requests/about-protected-branches){% endif %}. People with admin permissions can rename the default branch{% ifversion fpt or ghec or ghes > 3.3 %} and protected branches{% endif %}.'
 versions:
   fpt: '*'
-  ghes: '>=3.1'
+  ghes: '*'
   ghae: '*'
   ghec: '*'
 topics:
@@ -41,9 +41,9 @@ After you rename a branch in a repository on {% data variables.product.product_n
 From the local clone of the repository on a computer, run the following commands to update the name of the default branch.
 
 ```shell
-$ git branch -m <em>OLD-BRANCH-NAME</em> <em>NEW-BRANCH-NAME</em>
+$ git branch -m OLD-BRANCH-NAME NEW-BRANCH-NAME
 $ git fetch origin
-$ git branch -u origin/<em>NEW-BRANCH-NAME</em> <em>NEW-BRANCH-NAME</em>
+$ git branch -u origin/NEW-BRANCH-NAME NEW-BRANCH-NAME
 $ git remote set-head origin -a
 ```
 

@@ -22,7 +22,7 @@ To test if SSH over the HTTPS port is possible, run this SSH command:
 
 ```shell
 $ ssh -T -p 443 git@ssh.github.com
-> Hi <em>username</em>! You've successfully authenticated, but GitHub does not
+> Hi USERNAME! You've successfully authenticated, but GitHub does not
 > provide shell access.
 ```
 
@@ -32,7 +32,7 @@ If that worked, great! If not, you may need to [follow our troubleshooting guide
 
 If you are able to SSH into `git@ssh.{% data variables.command_line.backticks %}` over port 443, you can override your SSH settings to force any connection to {% data variables.product.product_location %} to run through that server and port.
 
-To set this in your SSH confifguration file, edit the file at `~/.ssh/config`, and add this section:
+To set this in your SSH configuration file, edit the file at `~/.ssh/config`, and add this section:
 
 ```
 Host {% data variables.command_line.codeblock %}
@@ -45,6 +45,6 @@ You can test that this works by connecting once more to {% data variables.produc
 
 ```shell
 $ ssh -T git@{% data variables.command_line.codeblock %}
-> Hi <em>username</em>! You've successfully authenticated, but GitHub does not
+> Hi USERNAME! You've successfully authenticated, but GitHub does not
 > provide shell access.
 ```

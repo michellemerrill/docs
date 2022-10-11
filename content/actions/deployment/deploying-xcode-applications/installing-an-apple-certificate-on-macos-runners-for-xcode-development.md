@@ -1,5 +1,6 @@
 ---
 title: Installing an Apple certificate on macOS runners for Xcode development
+shortTitle: Sign Xcode applications
 intro: 'You can sign Xcode apps within your continuous integration (CI) workflow by installing an Apple code signing certificate on {% data variables.product.prodname_actions %} runners.'
 redirect_from:
   - /actions/guides/installing-an-apple-certificate-on-macos-runners-for-xcode-development
@@ -13,7 +14,6 @@ type: tutorial
 topics:
   - CI
   - Xcode
-shortTitle: Sign Xcode applications
 ---
 
 {% data reusables.actions.enterprise-beta %}
@@ -49,7 +49,7 @@ Create secrets in your repository or organization for the following items:
   - Use the following command to convert your certificate to Base64 and copy it to your clipboard:
 
     ```shell
-    base64 <em>build_certificate</em>.p12 | pbcopy
+    base64 BUILD_CERTIFICATE.p12 | pbcopy
     ```
 * The password for your Apple signing certificate.
   - In this example, the secret is named `P12_PASSWORD`.
@@ -63,7 +63,7 @@ Create secrets in your repository or organization for the following items:
   - Use the following command to convert your provisioning profile to Base64 and copy it to your clipboard:
   
     ```shell
-    base64 <em>provisioning_profile.mobileprovision</em> | pbcopy
+    base64 PROVISIONING_PROFILE.mobileprovision | pbcopy
     ```
 
 * A keychain password.
@@ -74,7 +74,6 @@ Create secrets in your repository or organization for the following items:
 
 This example workflow includes a step that imports the Apple certificate and provisioning profile from the {% data variables.product.prodname_dotcom %} secrets, and installs them on the runner.
 
-{% raw %}
 ```yaml{:copy}
 name: App build
 on: push
@@ -85,13 +84,13 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: {% data reusables.actions.action-checkout %}
       - name: Install the Apple certificate and provisioning profile
         env:
-          BUILD_CERTIFICATE_BASE64: ${{ secrets.BUILD_CERTIFICATE_BASE64 }}
-          P12_PASSWORD: ${{ secrets.P12_PASSWORD }}
-          BUILD_PROVISION_PROFILE_BASE64: ${{ secrets.BUILD_PROVISION_PROFILE_BASE64 }}
-          KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
+          BUILD_CERTIFICATE_BASE64: {% raw %}${{ secrets.BUILD_CERTIFICATE_BASE64 }}{% endraw %}
+          P12_PASSWORD: {% raw %}${{ secrets.P12_PASSWORD }}{% endraw %}
+          BUILD_PROVISION_PROFILE_BASE64: {% raw %}${{ secrets.BUILD_PROVISION_PROFILE_BASE64 }}{% endraw %}
+          KEYCHAIN_PASSWORD: {% raw %}${{ secrets.KEYCHAIN_PASSWORD }}{% endraw %}
         run: |
           # create variables
           CERTIFICATE_PATH=$RUNNER_TEMP/build_certificate.p12
@@ -117,7 +116,6 @@ jobs:
       - name: Build app
         ...
 ```
-{% endraw %}
 
 ## Required clean-up on self-hosted runners
 

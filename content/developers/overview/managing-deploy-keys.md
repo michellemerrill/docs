@@ -4,6 +4,9 @@ intro: Learn different ways to manage SSH keys on your servers when you automate
 redirect_from:
   - /guides/managing-deploy-keys
   - /v3/guides/managing-deploy-keys
+  - /deploy-keys
+  - /articles/managing-deploy-keys
+  - /multiple-keys
 versions:
   fpt: '*'
   ghes: '*'
@@ -79,14 +82,16 @@ See [our guide on creating a personal access token](/authentication/keeping-your
 
 #### Setup
 
-1. [Run the `ssh-keygen` procedure][generating-ssh-keys] on your server, and remember where you save the generated public and private rsa key pair key pair.
-2. In the upper-right corner of any {% data variables.product.product_name %} page, click your profile photo, then click **Your profile**. ![Navigation to profile](/assets/images/profile-page.png)
-3. On your profile page, click **Repositories**, then click the name of your repository. ![Repositories link](/assets/images/repos.png)
-4. From your repository, click **Settings**. ![Repository settings](/assets/images/repo-settings.png)
-5. In the sidebar, click **Deploy Keys**, then click **Add deploy key**. ![Add Deploy Keys link](/assets/images/add-deploy-key.png)
-6. Provide a title, paste in your public key.  ![Deploy Key page](/assets/images/deploy-key.png)
-7. Select **Allow write access** if you want this key to have write access to the repository. A deploy key with write access lets a deployment push to the repository.
-8. Click **Add key**.
+1. [Run the `ssh-keygen` procedure][generating-ssh-keys] on your server, and remember where you save the generated public and private rsa key pair.
+{% data reusables.profile.navigating-to-profile %} 
+
+   ![Navigation to profile](/assets/images/profile-page.png)
+1. On your profile page, click **Repositories**, then click the name of your repository. ![Repositories link](/assets/images/repos.png)
+2. From your repository, click **Settings**. ![Repository settings](/assets/images/repo-settings.png)
+3. In the sidebar, click **Deploy Keys**, then click **Add deploy key**. ![Add Deploy Keys link](/assets/images/add-deploy-key.png)
+4. Provide a title, paste in your public key.  ![Deploy Key page](/assets/images/deploy-key.png)
+5. Select **Allow write access** if you want this key to have write access to the repository. A deploy key with write access lets a deployment push to the repository.
+6. Click **Add key**.
 
 #### Using multiple repositories on one server
 
@@ -118,7 +123,7 @@ $ git clone git@{% ifversion fpt or ghec %}github.com{% else %}my-GHE-hostname.c
 
 If your server needs to access repositories across one or more organizations, you can use a GitHub App to define the access you need, and then generate _tightly-scoped_, _server-to-server_ tokens from that GitHub App. The server-to-server tokens can be scoped to single or multiple repositories, and can have fine-grained permissions. For example, you can generate a token with read-only access to a repository's contents.
 
-Since GitHub Apps are a first class actor on  {% data variables.product.product_name %}, the server-to-server tokens are decoupled from any GitHub user, which makes them comparable to "service tokens". Additionally, server-to-server tokens have dedicated rate limits that scale with the size of the organizations that they act upon. For more information, see [Rate limits for Github Apps](/developers/apps/rate-limits-for-github-apps).
+Since GitHub Apps are a first class actor on  {% data variables.product.product_name %}, the server-to-server tokens are decoupled from any GitHub user, which makes them comparable to "service tokens". Additionally, server-to-server tokens have dedicated rate limits that scale with the size of the organizations that they act upon. For more information, see [Rate limits for {% data variables.product.prodname_github_apps %}](/developers/apps/rate-limits-for-github-apps).
 
 #### Pros
 

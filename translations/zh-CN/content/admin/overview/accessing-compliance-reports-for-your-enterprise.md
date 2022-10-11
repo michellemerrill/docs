@@ -26,6 +26,7 @@ You can access {% data variables.product.company_short %}'s compliance reports i
 
    {% data reusables.security.compliance-report-screenshot %}
 
-## 延伸阅读
+## Further reading
 
-- "[Accessing compliance reports for your organization](/organizations/keeping-your-organization-secure/managing-security-settings-for-your-organization/accessing-compliance-reports-for-your-organization)"
+- "[Accessing compliance reports for your organization](/organizations/keeping-your-organization-secure/managing-security-settings-for-your-organization/accessing-compliance-reports-for-your-organization)"{% ifversion enterprise-member-csv %}
+- "[Exporting membership information for your enterprise](/admin/user-management/managing-users-in-your-enterprise/exporting-membership-information-for-your-enterprise)"{% endif %}

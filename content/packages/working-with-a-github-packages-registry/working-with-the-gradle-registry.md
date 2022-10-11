@@ -57,10 +57,10 @@ publishing {
     repositories {
         maven {
             name = "GitHubPackages"
-            url = uri("https://{% ifversion fpt or ghec %}maven.pkg.github.com{% else %}<em>REGISTRY-URL</em>{% endif %}/<em>OWNER</em>/<em>REPOSITORY</em>")
+            url = uri("https://{% ifversion fpt or ghec %}maven.pkg.github.com{% else %}REGISTRY-URL{% endif %}/OWNER/REPOSITORY")
             credentials {
-                username = project.findProperty("gpr.user") ?: System.getenv("<em>USERNAME</em>")
-                password = project.findProperty("gpr.key") ?: System.getenv("<em>TOKEN</em>")
+                username = project.findProperty("gpr.user") ?: System.getenv("USERNAME")
+                password = project.findProperty("gpr.key") ?: System.getenv("TOKEN")
             }
         }
     }
@@ -84,10 +84,10 @@ subprojects {
         repositories {
             maven {
                 name = "GitHubPackages"
-                url = uri("https://{% ifversion fpt or ghec %}maven.pkg.github.com{% else %}<em>REGISTRY-URL</em>{% endif %}/<em>OWNER</em>/<em>REPOSITORY</em>")
+                url = uri("https://{% ifversion fpt or ghec %}maven.pkg.github.com{% else %}REGISTRY-URL{% endif %}/OWNER/REPOSITORY")
                 credentials {
-                    username = project.findProperty("gpr.user") ?: System.getenv("<em>USERNAME</em>")
-                    password = project.findProperty("gpr.key") ?: System.getenv("<em>TOKEN</em>")
+                    username = project.findProperty("gpr.user") ?: System.getenv("USERNAME")
+                    password = project.findProperty("gpr.key") ?: System.getenv("TOKEN")
                 }
             }
         }
@@ -110,10 +110,10 @@ publishing {
     repositories {
         maven {
             name = "GitHubPackages"
-            url = uri("https://{% ifversion fpt or ghec %}maven.pkg.github.com{% else %}<em>REGISTRY-URL</em>{% endif %}/<em>OWNER</em>/<em>REPOSITORY</em>")
+            url = uri("https://{% ifversion fpt or ghec %}maven.pkg.github.com{% else %}REGISTRY-URL{% endif %}/OWNER/REPOSITORY")
             credentials {
-                username = project.findProperty("gpr.user") as String? ?: System.getenv("<em>USERNAME</em>")
-                password = project.findProperty("gpr.key") as String? ?: System.getenv("<em>TOKEN</em>")
+                username = project.findProperty("gpr.user") as String? ?: System.getenv("USERNAME")
+                password = project.findProperty("gpr.key") as String? ?: System.getenv("TOKEN")
             }
         }
     }
@@ -137,10 +137,10 @@ subprojects {
         repositories {
             maven {
                 name = "GitHubPackages"
-                url = uri("https://{% ifversion fpt or ghec %}maven.pkg.github.com{% else %}<em>REGISTRY-URL</em>{% endif %}/<em>OWNER</em>/<em>REPOSITORY</em>")
+                url = uri("https://{% ifversion fpt or ghec %}maven.pkg.github.com{% else %}REGISTRY-URL{% endif %}/OWNER/REPOSITORY")
                 credentials {
-                    username = project.findProperty("gpr.user") as String? ?: System.getenv("<em>USERNAME</em>")
-                    password = project.findProperty("gpr.key") as String? ?: System.getenv("<em>TOKEN</em>")
+                    username = project.findProperty("gpr.user") as String? ?: System.getenv("USERNAME")
+                    password = project.findProperty("gpr.key") as String? ?: System.getenv("TOKEN")
                 }
             }
         }
@@ -192,10 +192,10 @@ To use a published package from {% data variables.product.prodname_registry %}, 
   ```shell
   repositories {
       maven {
-          url = uri("https://{% ifversion fpt or ghec %}maven.pkg.github.com{% else %}<em>REGISTRY-URL</em>{% endif %}/<em>OWNER</em>/<em>REPOSITORY</em>")
+          url = uri("https://{% ifversion fpt or ghec %}maven.pkg.github.com{% else %}REGISTRY-URL{% endif %}/OWNER/REPOSITORY")
           credentials {
-              username = project.findProperty("gpr.user") ?: System.getenv("<em>USERNAME</em>")
-              password = project.findProperty("gpr.key") ?: System.getenv("<em>TOKEN</em>")
+              username = project.findProperty("gpr.user") ?: System.getenv("USERNAME")
+              password = project.findProperty("gpr.key") ?: System.getenv("TOKEN")
           }
       }
   }
@@ -204,10 +204,10 @@ To use a published package from {% data variables.product.prodname_registry %}, 
   ```shell
   repositories {
       maven {
-          url = uri("https://{% ifversion fpt or ghec %}maven.pkg.github.com{% else %}<em>REGISTRY-URL</em>{% endif %}/<em>OWNER</em>/<em>REPOSITORY</em>")
+          url = uri("https://{% ifversion fpt or ghec %}maven.pkg.github.com{% else %}REGISTRY-URL{% endif %}/OWNER/REPOSITORY")
           credentials {
-              username = project.findProperty("gpr.user") as String? ?: System.getenv("<em>USERNAME</em>")
-              password = project.findProperty("gpr.key") as String? ?: System.getenv("<em>TOKEN</em>")
+              username = project.findProperty("gpr.user") as String? ?: System.getenv("USERNAME")
+              password = project.findProperty("gpr.key") as String? ?: System.getenv("TOKEN")
           }
       }
   }
@@ -216,4 +216,4 @@ To use a published package from {% data variables.product.prodname_registry %}, 
 ## Further reading
 
 - "[Working with the Apache Maven registry](/packages/working-with-a-github-packages-registry/working-with-the-apache-maven-registry)"
-- "{% ifversion fpt or ghes > 3.0 or ghec or ghae %}[Deleting and restoring a package](/packages/learn-github-packages/deleting-and-restoring-a-package){% elsif ghes < 3.1 %}[Deleting a package](/packages/learn-github-packages/deleting-a-package){% endif %}"
+- "[Deleting and restoring a package](/packages/learn-github-packages/deleting-and-restoring-a-package)"

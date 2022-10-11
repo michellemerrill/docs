@@ -21,7 +21,7 @@ Every gist is a Git repository, which means that it can be forked and cloned. {%
 
 Gists can be {% ifversion ghae %}internal{% else %}public{% endif %} or secret. {% ifversion ghae %}Internal{% else %}Public{% endif %} gists show up in {% data variables.gists.discover_url %}, where {% ifversion ghae %}enterprise members{% else %}people{% endif %} can browse new gists as they're created. They're also searchable, so you can use them if you'd like other people to find and see your work.
 
-Secret gists don't show up in {% data variables.gists.discover_url %} and are not searchable. Secret gists aren't private. If you send the URL of a secret gist to {% ifversion ghae %}another enterprise member{% else %}a friend{% endif %}, they'll be able to see it. However, if {% ifversion ghae %}any other enterprise member{% else %}someone you don't know{% endif %} discovers the URL, they'll also be able to see your gist. If you need to keep your code away from prying eyes, you may want to [create a private repository](/articles/creating-a-new-repository) instead.
+Secret gists don't show up in {% data variables.gists.discover_url %} and are not searchable unless you are logged in and are the author of the secret gist. Secret gists aren't private. If you send the URL of a secret gist to {% ifversion ghae %}another enterprise member{% else %}a friend{% endif %}, they'll be able to see it. However, if {% ifversion ghae %}any other enterprise member{% else %}someone you don't know{% endif %} discovers the URL, they'll also be able to see your gist. If you need to keep your code away from prying eyes, you may want to [create a private repository](/articles/creating-a-new-repository) instead.
 
 {% data reusables.gist.cannot-convert-public-gists-to-secret %}
 
@@ -60,7 +60,6 @@ Gist supports mapping GeoJSON files. These maps are displayed in embedded gists,
 
 Follow the steps below to create a gist.
 
-{% ifversion fpt or ghes or ghae or ghec %}
 {% note %}
 
 You can also create a gist using the {% data variables.product.prodname_cli %}. For more information, see "[`gh gist create`](https://cli.github.com/manual/gh_gist_create)" in the {% data variables.product.prodname_cli %} documentation.
@@ -68,7 +67,6 @@ You can also create a gist using the {% data variables.product.prodname_cli %}. 
 Alternatively, you can drag and drop a text file from your desktop directly into the editor.
 
 {% endnote %}
-{% endif %}
 
 1. Sign in to {% data variables.product.product_name %}.
 2. Navigate to your {% data variables.gists.gist_homepage %}.

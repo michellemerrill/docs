@@ -1,12 +1,11 @@
 ---
-title: Filtrando alertas na visão geral de segurança
-intro: Use os filtros para ver categorias específicas de alertas
-permissions: Organization owners and security managers can access the security overview for organizations. Members of a team can see the security overview for repositories that the team has admin privileges for.
-product: '{% data reusables.gated-features.security-center %}'
+title: Filtering alerts in the security overview
+intro: Use filters to view specific categories of alerts
+permissions: '{% data reusables.security-overview.permissions %}'
+product: '{% data reusables.gated-features.security-overview %}'
 versions:
-  fpt: '*'
-  ghae: issue-4554
-  ghes: '>3.1'
+  ghae: '*'
+  ghes: '*'
   ghec: '*'
 type: how_to
 topics:
@@ -15,123 +14,142 @@ topics:
   - Alerts
   - Organizations
   - Teams
-shortTitle: Filtrando alertas
+shortTitle: Filtering alerts
 ---
 
-{% data reusables.security-center.beta %}
+{% ifversion ghes < 3.5 or ghae %}
+{% data reusables.security-overview.beta %}
+{% endif %}
 
-## Sobre a filtragem da visão geral de segurança
+## About filtering the security overview
 
-Você pode usar filtros na visão geral de segurança para restringir seu foco baseado em uma série de fatores como, por exemplo, o nível de risco de alerta, tipo de alerta e habilitação do recurso. Existem filtros diferentes disponíveis, dependendo da visualização específica e da análise no nível da organização, da equipe ou do repositório.
+You can use filters in the security overview to narrow your focus based on a range of factors, like alert risk level, alert type and feature enablement. Different filters are available depending on the specific view and whether your analysis is at the organization, team or repository level.
 
-## Filtrar por repositório
+{% ifversion security-overview-displayed-alerts %}
+{% note %}
+{% data reusables.security-overview.information-varies-GHAS %}
+{% endnote %}
+{% endif %}
 
-Disponível em todos os níveis da organização e no nível da equipe.
+## Filter by repository
 
-| Qualifier              | Descrição                                      |
-| ---------------------- | ---------------------------------------------- |
-| `repo:REPOSITORY-NAME` | Exibe alertas para o repositório especificado. |
+Available in all organization-level and team-level views.
 
-## Filtrar se as funcionalidades de segurança estão habilitadas
+| Qualifier | Description |
+| -------- | -------- |
+| `repo:REPOSITORY-NAME` | Displays alerts for the specified repository. |
 
-Disponível no nível da organização e na visão geral do nível da equipe.
+## Filter by whether security features are enabled
 
-| Qualifier                     | Descrição                                                                                            |
-| ----------------------------- | ---------------------------------------------------------------------------------------------------- |
-| `code-scanning:enabled`       | Exibe repositórios com {% data variables.product.prodname_code_scanning %} habilitado.             |
-| `code-scanning:not-enabled`   | Exibe repositórios que não têm {% data variables.product.prodname_code_scanning %} habilitado.     |
-| `secret-scanning:enabled`     | Exibe repositórios com {% data variables.product.prodname_secret_scanning %} habilitado.           |
-| `secret-scanning:not-enabled` | Exibe repositórios com {% data variables.product.prodname_secret_scanning %} habilitado.           |
-| `dependabot:enabled`          | Exibe repositórios com {% data variables.product.prodname_dependabot_alerts %} habilitado.         |
-| `dependabot:not-enabled`      | Exibe repositórios que não têm {% data variables.product.prodname_dependabot_alerts %} habilitado. |
-| `not-enabled:any`             | Exibe repositórios com pelo menos um recurso de segurança que não está habilitado.                   |
+Available in the organization-level and team-level overview.
 
-## Filtrar por tipo de repositório
+| Qualifier | Description |
+| -------- | -------- |
+| `code-scanning:enabled` | Display repositories that have {% data variables.product.prodname_code_scanning %} enabled. |
+| `code-scanning:not-enabled` | Display repositories that do not have {% data variables.product.prodname_code_scanning %} enabled. |
+| `secret-scanning:enabled` | Display repositories that have {% data variables.product.prodname_secret_scanning %} enabled. |
+| `secret-scanning:not-enabled` | Display repositories that have {% data variables.product.prodname_secret_scanning %} enabled. |
+| `dependabot:enabled` | Display repositories that have {% data variables.product.prodname_dependabot_alerts %} enabled. |
+| `dependabot:not-enabled` | Display repositories that do not have {% data variables.product.prodname_dependabot_alerts %} enabled. |
+| `not-enabled:any` | Display repositories with at least one security feature that is not enabled. |
 
-Disponível no nível da organização e na visão geral do nível da equipe.
+## Filter by repository type
 
-| Qualifier | Descrição |
-| --------- | --------- |
-|           |           |
-{%- ifversion fpt or ghes or ghec %}
-| `is:public` | Exibe repositórios públicos. |
+Available in the organization-level and team-level overview.
+
+| Qualifier | Description |
+| -------- | -------- |
+{%- ifversion ghes or ghec %}
+| `is:public` | Display public repositories. |
 {%- endif %}
 {%- ifversion ghes or ghec or ghae %}
-| `is:internal` | Exibe repositórios internos. |
+| `is:internal` | Display internal repositories. |
 {%- endif %}
-| `is:private` | Exibe repositórios privados. | | `archived:true` | Exibe repositórios arquivados. | | `archived:true` | Exibe repositórios arquivados. |
+| `is:private` | Display private repositories. |
+| `archived:true` | Display archived repositories. |
+| `archived:true` | Display archived repositories. |
 
-## Filtrar por nível de risco para repositórios
+## Filter by level of risk for repositories
 
-O nível de risco para um repositório é determinado pelo número e gravidade dos alertas de funcionalidades de segurança. Se uma ou mais funcionalidades de segurança não estiverem habilitadas para um repositório, o repositório terá um nível de risco desconhecido. Se um repositório não tiver riscos detectados por funcionalidades de segurança, o repositório terá um nível claro de risco. Disponível na visão geral no nível da organização.
+The level of risk for a repository is determined by the number and severity of alerts from security features. If one or more security features are not enabled for a repository, the repository will have an unknown level of risk. If a repository has no risks that are detected by security features, the repository will have a clear level of risk. Available in the organization-level overview.
 
-| Qualifier      | Descrição                                                         |
-| -------------- | ----------------------------------------------------------------- |
-| `risk:high`    | Exibe repositórios que estão em alto risco.                       |
-| `risk:medium`  | Exibe repositórios que estão em risco médio.                      |
-| `risk:low`     | Exibe repositórios que estão em risco baixo.                      |
-| `risk:unknown` | Exibir repositórios que estão com um nível de risco desconhecido. |
-| `risk:clear`   | Exibe repositórios que não tem um nível de risco identificado.    |
+| Qualifier | Description |
+| -------- | -------- |
+| `risk:high` | Display repositories that are at high risk. |
+| `risk:medium` | Display repositories that are at medium risk. |
+| `risk:low` | Display repositories that are at low risk. |
+| `risk:unknown` | Display repositories that are at an unknown level of risk. |
+| `risk:clear` | Display repositories that have no detected level of risk. |
 
-## Filtrar por número de alertas
+## Filter by number of alerts
 
-Disponível na visão geral no nível da organização.
+Available in the organization-level overview.
 
-| Qualifier                 | Descrição                                                                                                                                                                        |
-| ------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| <code>code-scanning:<em>n</em></code> | Exibe repositórios que têm *n* alertas de {% data variables.product.prodname_code_scanning %}. Este qualificador pode usar os operadores de comperação `=`, `>` e `<`.   |
-| <code>secret-scanning:<em>n</em></code> | Exibe repositórios que têm *n* alertas de {% data variables.product.prodname_secret_scanning %}. Este qualificador pode usar os operadores de comperação `=`, `>` e `<`. |
-| <code>dependabot:<em>n</em></code> | Exibir repositórios que têm *n* {% data variables.product.prodname_dependabot_alerts %}. Este qualificador pode usar os operadores de comperação `=`, `>` e `<`.         |
+| Qualifier | Description |
+| -------- | -------- |
+| <code>code-scanning:<em>n</em></code> | Display repositories that have *n* {% data variables.product.prodname_code_scanning %} alerts. This qualifier can use `=`, `>` and `<` comparison operators. |
+| <code>secret-scanning:<em>n</em></code> | Display repositories that have *n* {% data variables.product.prodname_secret_scanning %} alerts. This qualifier can use `=`, `>` and `<` comparison operators. |
+| <code>dependabot:<em>n</em></code> | Display repositories that have *n* {% data variables.product.prodname_dependabot_alerts %}. This qualifier can use `=`, `>` and `<` comparison operators. |
 
 
-## Filtrar por equipe
+## Filter by team
 
-Disponível na visão geral no nível da organização.
+Available in the organization-level overview.
 
-| Qualifier                 | Descrição                                                                         |
-| ------------------------- | --------------------------------------------------------------------------------- |
-| <code>team:<em>TEAM-NAME</em></code> | Exibe os repositórios para os quais *TEAM-NAME* tem privilégios de administrador. |
+| Qualifier | Description |
+| -------- | -------- |
+| <code>team:<em>TEAM-NAME</em></code> | Displays repositories that *TEAM-NAME* has admin privileges for. |
 
-## Filtrar por tópico
+## Filter by topic
 
-Disponível na visão geral no nível da organização.
+Available in the organization-level overview.
 
-| Qualifier                 | Descrição                                                    |
-| ------------------------- | ------------------------------------------------------------ |
-| <code>topic:<em>TOPIC-NAME</em></code> | Exibe repositórios que são classificados com o *TOPIC-NAME*. |
+| Qualifier | Description |
+| -------- | -------- |
+| <code>topic:<em>TOPIC-NAME</em></code> | Displays repositories that are classified with *TOPIC-NAME*. |
 
-{% if security-overview-views %}
+{% ifversion security-overview-views %}
 
-## Filtrar por gravidade
+## Filter by severity
 
-Disponível na visualização de alerta de digitalização de código. Todos os alertas de digitalização de códigos têm uma das categorias exibidas abaixo. Você pode clicar em qualquer resultado para ver todos os detalhes da regra relevante e a linha de código que acionou o alerta.
+Available in the code scanning alert views. All code scanning alerts have one of the categories shown below. You can click any result to see full details of the relevant rule, and the line of code that triggered the alert.
 
-| Qualifier           | Descrição                                                                                              |
-| ------------------- | ------------------------------------------------------------------------------------------------------ |
-| `severity:critical` | Exibe alertas de {% data variables.product.prodname_code_scanning %} categorizados como críticos.    |
-| `severity:high`     | Exibe alertas de {% data variables.product.prodname_code_scanning %} categorizados como altos.       |
-| `severity:medium`   | Exibe alertas de {% data variables.product.prodname_code_scanning %} categorizados como médios.      |
-| `severity:low`      | Exibe alertas de {% data variables.product.prodname_code_scanning %} categorizados como baixos.      |
-| `severity:error`    | Exibe alertas de {% data variables.product.prodname_code_scanning %} categorizados como erros.       |
-| `severity:warning`  | Exibe alertas de {% data variables.product.prodname_code_scanning %} categorizados como avisos.      |
-| `severity:note`     | Exibe alertas de {% data variables.product.prodname_code_scanning %} categorizados como observações. |
+| Qualifier | Description |
+| -------- | -------- |
+|`severity:critical`|Displays {% data variables.product.prodname_code_scanning %} alerts categorized as critical.|
+|`severity:high`|Displays {% data variables.product.prodname_code_scanning %} alerts categorized as high.|
+|`severity:medium`|Displays {% data variables.product.prodname_code_scanning %} alerts categorized as medium.|
+|`severity:low`|Displays {% data variables.product.prodname_code_scanning %} alerts categorized as low.|
+|`severity:error`|Displays {% data variables.product.prodname_code_scanning %} alerts categorized as errors.|
+|`severity:warning`|Displays {% data variables.product.prodname_code_scanning %} alerts categorized as warnings.|
+|`severity:note`|Displays {% data variables.product.prodname_code_scanning %} alerts categorized as notes.|
+
+{% ifversion dependabot-alerts-vulnerable-calls %}
+## Filter by {% data variables.product.prodname_dependabot %} alert type
+
+Available in the {% data variables.product.prodname_dependabot %} alert views. You can filter the view to show {% data variables.product.prodname_dependabot_alerts %} that are ready to fix or where additional information about exposure is available. You can click any result to see full details of the alert.
+
+| Qualifier | Description |
+| -------- | -------- |
+|`has:patch`|Displays {% data variables.product.prodname_dependabot %} alerts for vulnerabilities where a secure version is already available.|
+|`has:vulnerable-calls`|Displays {% data variables.product.prodname_dependabot %} alerts where at least one call from the repository to a vulnerable function is detected. For more information, see "[Viewing and updating Dependabot alerts](/code-security/dependabot/dependabot-alerts/viewing-and-updating-dependabot-alerts#about-the-detection-of-calls-to-vulnerable-functions)."|
+{% endif %}
 
 {% endif %}
 
-## Filtrar por tipos de segredo
+## Filter by secret types
 
-Disponível nas visualizações de alerta de segredos.
+Available in the secret scanning alert views.
 
-| Qualifier                                                                                                                                                                                                               | Descrição                                                                                                                                                                                                                            |
-| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `secret-type:SERVICE_PROVIDER`                                                                                                                                                                                          | Exibe alertas para o segredo e provedor especificados. Para obter mais informações, consulte "[Parceiros de {% data variables.product.prodname_secret_scanning_caps %}](/code-security/secret-scanning/secret-scanning-partners)." |
-| `secret-type:CUSTOM-PATTERN`                                                                                                                                                                                            | Exibe alertas de segredos que correspondem ao padrão personalizado especificado.                                                                                                                                                     |
-| {% ifversion not fpt %}Para obter mais informações, consulte "[Definindo padrões personalizados para digitalização de segredo](/code-security/secret-scanning/defining-custom-patterns-for-secret-scanning).{% endif %} |                                                                                                                                                                                                                                      |
+| Qualifier | Description |
+| -------- | -------- |
+| `secret-type:SERVICE_PROVIDER` | Displays alerts for the specified secret and provider. For more information, see "[{% data variables.product.prodname_secret_scanning_caps %} patterns](/code-security/secret-scanning/secret-scanning-patterns)." |
+| `secret-type:CUSTOM-PATTERN` | Displays alerts for secrets matching the specified custom pattern. For more information, see "[Defining custom patterns for secret scanning](/code-security/secret-scanning/defining-custom-patterns-for-secret-scanning)." |
 
-## Filtrar por provedor
+## Filter by provider
 
-Disponível nas visualizações de alerta de segredos.
+Available in the secret scanning alert views.
 
-| Qualifier                | Descrição                                                                                                                                                                                                                                                  |
-| ------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `provider:PROVIDER_NAME` | Exibe alertas para todos os problemas de segredos por provedor especificado. Para obter mais informações, consulte "[Parceiros de {% data variables.product.prodname_secret_scanning_caps %}](/code-security/secret-scanning/secret-scanning-partners)." |
+| Qualifier | Description |
+| -------- | -------- |
+|`provider:PROVIDER_NAME` | Displays alerts for all secrets issues by the specified provider. For more information, see "[{% data variables.product.prodname_secret_scanning_caps %} patterns](/code-security/secret-scanning/secret-scanning-patterns)." |

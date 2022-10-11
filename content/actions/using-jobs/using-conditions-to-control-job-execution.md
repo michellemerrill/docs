@@ -1,6 +1,6 @@
 ---
 title: Using conditions to control job execution
-shortTitle: Using conditions to control job execution
+shortTitle: Use conditions to control job execution
 intro: Prevent a job from running unless your conditions are met.
 versions:
   fpt: '*'
@@ -15,4 +15,14 @@ miniTocMaxHeadingLevel: 4
 
 ## Overview
 
+{% note %}
+
+**Note:** A job that is skipped will report its status as "Success". It will not prevent a pull request from merging, even if it is a required check.
+
+{% endnote %}
+
 {% data reusables.actions.jobs.section-using-conditions-to-control-job-execution %}
+
+You would see the following status on a skipped job:
+
+![Skipped-required-run-details](/assets/images/help/repository/skipped-required-run-details.png)

@@ -1,5 +1,6 @@
 ---
 title: Creating a Docker container action
+shortTitle: Create a Docker container action
 intro: 'This guide shows you the minimal steps required to build a Docker container action. '
 redirect_from:
   - /articles/creating-a-docker-container-action
@@ -15,7 +16,6 @@ type: tutorial
 topics:
   - Action development
   - Docker
-shortTitle: Docker container action
 ---
 
 {% data reusables.actions.enterprise-beta %}
@@ -27,9 +27,9 @@ In this guide, you'll learn about the basic components needed to create and use 
 
 Once you complete this project, you should understand how to build your own Docker container action and test it in a workflow.
 
-{% data reusables.github-actions.self-hosted-runner-reqs-docker %}
+{% data reusables.actions.self-hosted-runner-reqs-docker %}
 
-{% data reusables.github-actions.context-injection-warning %}
+{% data reusables.actions.context-injection-warning %}
 
 ## Prerequisites
 
@@ -39,7 +39,7 @@ You may find it helpful to have a basic understanding of {% data variables.produ
 {% ifversion ghae %}
 - "[Docker container filesystem](/actions/using-github-hosted-runners/about-ae-hosted-runners#docker-container-filesystem)."
 {% else %} 
-- "[Virtual environments for {% data variables.product.prodname_dotcom %}](/actions/automating-your-workflow-with-github-actions/virtual-environments-for-github-hosted-runners#docker-container-filesystem)"
+- "[About {% data variables.product.prodname_dotcom %}-hosted runners](/actions/using-github-hosted-runners/about-github-hosted-runners#docker-container-filesystem)"
 {% endif %}
 
 Before you begin, you'll need to create a {% data variables.product.prodname_dotcom %} repository.
@@ -96,7 +96,7 @@ runs:
 ```
 {% endraw %}
 
-This metadata defines one `who-to-greet`  input and one `time` output parameter. To pass inputs to the Docker container, you must declare the input using `inputs` and pass the input in the `args` keyword.
+This metadata defines one `who-to-greet`  input and one `time` output parameter. To pass inputs to the Docker container, you should declare the input using `inputs` and pass the input in the `args` keyword. Everything you include in `args` is passed to the container, but for better discoverability for users of your action, we recommended using inputs.
 
 {% data variables.product.prodname_dotcom %} will build an image from your `Dockerfile`, and run commands in a new container using this image.
 
@@ -120,11 +120,20 @@ Next, the script gets the current time and sets it as an output variable that ac
   ```
   If `entrypoint.sh` executes without any errors, the action's status is set to `success`. You can also explicitly set exit codes in your action's code to provide an action's status. For more information, see "[Setting exit codes for actions](/actions/creating-actions/setting-exit-codes-for-actions)."
 
-1. Make your `entrypoint.sh` file executable by running the following command on your system.
+
+1. Make your `entrypoint.sh` file executable. Git provides a way to explicitly change the permission mode of a file so that it doesn’t get reset every time there is a clone/fork.
 
   ```shell{:copy}
-  $ chmod +x entrypoint.sh
+  $ git update-index --chmod=+x entrypoint.sh
   ```
+  
+1. Optionally, to check the permission mode of the file in the git index, run the following command.
+
+  ```shell{:copy}
+  $ git ls-files --stage entrypoint.sh
+  ```
+
+   An output like `100755 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0       entrypoint.sh` means the file has the executable permission. In this example, `755` denotes the executable permission.
 
 ## Creating a README
 
@@ -212,7 +221,6 @@ jobs:
 
 Copy the following example workflow code into a `.github/workflows/main.yml` file in your action's repository. You can also replace the `who-to-greet` input with your name. {% ifversion fpt or ghec %}This private action can't be published to {% data variables.product.prodname_marketplace %}, and can only be used in this repository.{% endif %}
 
-{% raw %}
 **.github/workflows/main.yml**
 ```yaml{:copy}
 on: [push]
@@ -225,7 +233,7 @@ jobs:
       # To use this repository's private action,
       # you must check out the repository
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: {% data reusables.actions.action-checkout %}
       - name: Hello world action step
         uses: ./ # Uses an action in the root directory
         id: hello
@@ -233,14 +241,10 @@ jobs:
           who-to-greet: 'Mona the Octocat'
       # Use the output from the `hello` step
       - name: Get the output time
-        run: echo "The time was ${{ steps.hello.outputs.time }}"
+        run: echo "The time was {% raw %}${{ steps.hello.outputs.time }}"{% endraw %}
 ```
-{% endraw %}
 
-From your repository, click the **Actions** tab, and select the latest workflow run. {% ifversion fpt or ghes > 3.0 or ghae or ghec %}Under **Jobs** or in the visualization graph, click **A job to say hello**. {% endif %}You should see "Hello Mona the Octocat" or the name you used for the `who-to-greet` input and the timestamp printed in the log.
+From your repository, click the **Actions** tab, and select the latest workflow run. Under **Jobs** or in the visualization graph, click **A job to say hello**. You should see "Hello Mona the Octocat" or the name you used for the `who-to-greet` input and the timestamp printed in the log.
 
-{% ifversion fpt or ghes > 3.0 or ghae or ghec %}
 ![A screenshot of using your action in a workflow](/assets/images/help/repository/docker-action-workflow-run-updated.png)
-{% else %}
-![A screenshot of using your action in a workflow](/assets/images/help/repository/docker-action-workflow-run.png)
-{% endif %}
+
