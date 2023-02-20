@@ -86,6 +86,7 @@ export default [
   'Java',
   'JavaScript',
   'Jenkins',
+  'Kotlin',
   'Legal',
   'LFS',
   'Licensing',
@@ -143,6 +144,8 @@ export default [
   'Support',
   'Swift',
   'Teams',
+  // TODO 47F50CA3 uncomment when transcripts are ready
+  // 'Transcripts',
   'Travis CI',
   'Trials',
   'Troubleshooting',

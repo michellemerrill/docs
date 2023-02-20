@@ -16,9 +16,9 @@ You must accept the terms of service to publish actions in {% data variables.pro
 
 ## About publishing actions
 
-Before you can publish an action, you'll need to create an action in your repository. For more information, see "[Creating actions](/actions/creating-actions)."
+Before you can publish an action, you'll need to create an action in your repository. For more information, see "[AUTOTITLE](/actions/creating-actions)."
 
-When you plan to publish your action to {% data variables.product.prodname_marketplace %}, you'll need ensure that the repository only includes the metadata file, code, and files necessary for the action. Creating a single repository for the action allows you to tag, release, and package the code in a single unit. {% data variables.product.prodname_dotcom %} also uses the action's metadata on your {% data variables.product.prodname_marketplace %} page.
+When you plan to publish your action to {% data variables.product.prodname_marketplace %}, you'll need to ensure that the repository only includes the metadata file, code, and files necessary for the action. Creating a single repository for the action allows you to tag, release, and package the code in a single unit. {% data variables.product.prodname_dotcom %} also uses the action's metadata on your {% data variables.product.prodname_marketplace %} page.
 
 Actions are published to {% data variables.product.prodname_marketplace %} immediately and aren't reviewed by {% data variables.product.prodname_dotcom %} as long as they meet these requirements:
 
@@ -38,9 +38,10 @@ You can add the action you've created to {% data variables.product.prodname_mark
 To draft a new release and publish the action to {% data variables.product.prodname_marketplace %}, follow these instructions:
 
 {% data reusables.repositories.navigate-to-repo %}
-1. When a repository contains an action metadata file (`action.yml` or `action.yaml`), you'll see a banner to publish the action to {% data variables.product.prodname_marketplace %}. Click **Draft a release**.
-![Publish this action to markeplace button](/assets/images/help/repository/publish-github-action-to-markeplace-button.png)
-1. Select **Publish this action to the {% data variables.product.prodname_marketplace %}**. If you can't select the **Publish this action to the {% data variables.product.prodname_marketplace %}** checkbox, you'll need to read and accept the {% data variables.product.prodname_marketplace %} agreement first.
+1. Navigate to the action metadata file in your repository (`action.yml` or `action.yaml`), and you'll see a banner to publish the action to {% data variables.product.prodname_marketplace %}. Click **Draft a release**.
+
+   ![Publish this action to marketplace button](/assets/images/help/repository/publish-github-action-to-marketplace-button.png)
+1. Under "Release Action", select the checkbox to publish the action to the {% data variables.product.prodname_marketplace %}. If you can't select the checkbox, you must first click the link to read and accept the {% data variables.product.prodname_marketplace %} Developer Agreement.
 ![Select publish to Marketplace](/assets/images/help/repository/marketplace_actions_publish.png)
 1. If the labels in your metadata file contain any problems, you will see an error message.
 ![See notification](/assets/images/help/repository/marketplace_actions_fixerrors.png)
@@ -50,7 +51,7 @@ To draft a new release and publish the action to {% data variables.product.prodn
 ![Choose category](/assets/images/help/repository/marketplace_actions_categories.png)
 1. Tag your Action with a version, and add a release title. This helps people know what changes or features the release includes. People will see the version in the action's dedicated {% data variables.product.prodname_marketplace %} page.
 ![Tag a version](/assets/images/help/repository/marketplace_actions_version.png)
-1. Complete all other fields and click **Publish release**. Publishing requires you to use two-factor authentication. For more information, see "[Configuring two-factor authentication](/articles/configuring-two-factor-authentication/)."
+1. Complete all other fields and click **Publish release**. Publishing requires you to use two-factor authentication. For more information, see "[AUTOTITLE](/authentication/securing-your-account-with-two-factor-authentication-2fa/configuring-two-factor-authentication)."
 ![Publish the release](/assets/images/help/repository/marketplace_actions_publishrelease.png)
 
 ## Removing an action from {% data variables.product.prodname_marketplace %}

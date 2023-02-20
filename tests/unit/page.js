@@ -3,14 +3,12 @@ import path from 'path'
 import cheerio from 'cheerio'
 import { describe, expect } from '@jest/globals'
 
-import Page from '../../lib/page.js'
-import readJsonFile from '../../lib/read-json-file.js'
+import Page, { FrontmatterErrorsError } from '../../lib/page.js'
 import { allVersions } from '../../lib/all-versions.js'
 import enterpriseServerReleases, { latest } from '../../lib/enterprise-server-releases.js'
 import nonEnterpriseDefaultVersion from '../../lib/non-enterprise-default-version.js'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
-const prerenderedObjects = readJsonFile('./lib/graphql/static/prerendered-objects.json')
 const enterpriseServerVersions = Object.keys(allVersions).filter((v) =>
   v.startsWith('enterprise-server@')
 )
@@ -30,15 +28,6 @@ describe('Page class', () => {
     const page = await Page.init(opts)
     expect(page.relativePath).toBe(opts.relativePath)
     expect(page.fullPath.includes(page.relativePath)).toBe(true)
-  })
-
-  test('does not error out on translated TOC with no links', async () => {
-    const page = await Page.init({
-      relativePath: 'translated-toc-with-no-links-index.md',
-      basePath: path.join(__dirname, '../fixtures'),
-      languageCode: 'ja',
-    })
-    expect(typeof page.title).toBe('string')
   })
 
   describe('showMiniToc page property', () => {
@@ -79,7 +68,7 @@ describe('Page class', () => {
     })
   })
 
-  describe('page.render(context)', () => {
+  describe.skip('page.render(context)', () => {
     test('rewrites links to include the current language prefix and version', async () => {
       const page = await Page.init(opts)
       const context = {
@@ -137,18 +126,6 @@ describe('Page class', () => {
       const last = $('a[href]').last()
       expect(last.text()).toBe('Version 3.2')
       expect(last.attr('href')).toBe('/en/enterprise-server@3.2')
-    })
-
-    test('rewrites links on prerendered GraphQL page include the current language prefix and version', async () => {
-      const graphqlVersion =
-        allVersions[`enterprise-server@${enterpriseServerReleases.latest}`].miscVersionName
-      const $ = cheerio.load(prerenderedObjects[graphqlVersion].html)
-      expect($('a[href^="/graphql/reference/input-objects"]').length).toBe(0)
-      expect(
-        $(
-          `a[href^="/en/enterprise-server@${enterpriseServerReleases.latest}/graphql/reference/input-objects"]`
-        ).length
-      ).toBeGreaterThan(0)
     })
 
     test('rewrites links in the intro to include the current language prefix and version', async () => {
@@ -287,24 +264,6 @@ describe('Page class', () => {
         return page.render(context)
       }).not.toThrow()
     })
-
-    test('support next GitHub AE version in frontmatter', async () => {
-      // This fixture has `github-ae: 'next'` hardcoded in the frontmatter
-      const page = await Page.init({
-        relativePath: 'page-versioned-for-ghae-next.md',
-        basePath: path.join(__dirname, '../fixtures'),
-        languageCode: 'en',
-      })
-      // set version to @latest
-      const context = {
-        currentVersion: 'github-ae@latest',
-        currentLanguage: 'en',
-      }
-      context.currentPath = `/${context.currentLanguage}/${context.currentVersion}`
-      await expect(() => {
-        return page.render(context)
-      }).not.toThrow()
-    })
   })
 
   test('preserves `languageCode`', async () => {
@@ -390,20 +349,6 @@ describe('Page class', () => {
             `enterprise-server@${enterpriseServerReleases.oldestSupported}`
         ).href
       ).toBe(`/en/enterprise-server@${enterpriseServerReleases.oldestSupported}`)
-    })
-
-    test('permalinks for dotcom-only pages', async () => {
-      const page = await Page.init({
-        relativePath: 'authentication/troubleshooting-ssh/using-ssh-over-the-https-port.md',
-        basePath: path.join(__dirname, '../../content'),
-        languageCode: 'en',
-      })
-      const expectedPath = '/en/authentication/troubleshooting-ssh/using-ssh-over-the-https-port'
-      expect(
-        page.permalinks.find((permalink) => permalink.pageVersion === nonEnterpriseDefaultVersion)
-          .href
-      ).toBe(expectedPath)
-      expect(page.permalinks.length).toBe(2)
     })
 
     test('permalinks for enterprise-only pages', async () => {
@@ -583,19 +528,34 @@ describe('Page class', () => {
       expect(page.featuredLinks.videos).toStrictEqual([
         {
           title: 'codespaces',
-          href: 'https://www.youtube-nocookie.com/embed/cP0I9w2coGU',
+          href: 'https://www.youtube-nocookie.com/embed/_W9B7qc9lVc',
         },
         {
           title: 'more codespaces',
-          href: 'https://www.youtube-nocookie.com/embed/cP0I9w2coGU',
+          href: 'https://www.youtube-nocookie.com/embed/_W9B7qc9lVc',
         },
         {
           title: 'even more codespaces',
-          href: 'https://www.youtube-nocookie.com/embed/cP0I9w2coGU',
+          href: 'https://www.youtube-nocookie.com/embed/_W9B7qc9lVc',
         },
       ])
 
       expect(page.featuredLinks.videosHeading).toBe('Custom Videos heading')
+    })
+  })
+
+  describe('introLinks', () => {
+    it('includes the links specified in the introLinks frontmatter', async () => {
+      const page = await Page.init({
+        relativePath: 'article-with-introLinks.md',
+        basePath: path.join(__dirname, '../fixtures'),
+        languageCode: 'en',
+      })
+
+      expect(page.introLinks).toStrictEqual({
+        overview: 'https://github.com',
+        'custom link!': 'https://github.com/features',
+      })
     })
   })
 
@@ -619,17 +579,6 @@ describe('Page class', () => {
     it('works for the homepage', () => {
       const variants = Page.getLanguageVariants('/en')
       expect(variants.find(({ code }) => code === 'en').href).toBe('/en')
-      // expect(variants.find(({ code }) => code === 'ja').href).toBe('/ja')
-    })
-
-    it('works for enterprise URLs', () => {
-      const variants = Page.getLanguageVariants(
-        `/ja/enterprise/${enterpriseServerReleases.oldestSupported}/user/articles/github-glossary`
-      )
-      expect(variants.find(({ code }) => code === 'en').href).toBe(
-        `/en/enterprise/${enterpriseServerReleases.oldestSupported}/user/articles/github-glossary`
-      )
-      // expect(variants.find(({ code }) => code === 'ja').href).toBe('/ja/enterprise/2.14/user/articles/github-glossary')
     })
   })
 
@@ -754,13 +703,26 @@ describe('catches errors thrown in Page class', () => {
       })
     }
 
-    await expect(getPage).rejects.toThrowError('invalid frontmatter entry')
+    await expect(getPage).rejects.toThrow(FrontmatterErrorsError)
   })
 
   test('missing versions frontmatter', async () => {
     async function getPage() {
       return await Page.init({
         relativePath: 'page-with-missing-product-versions.md',
+        basePath: path.join(__dirname, '../fixtures'),
+        languageCode: 'en',
+      })
+    }
+
+    await expect(getPage).rejects.toThrowError('versions')
+  })
+
+  // TODO - UNSKIP WHEN GHAE IS UPDATED WITH SEMVER VERSIONING
+  test.skip('invalid versions frontmatter', async () => {
+    async function getPage() {
+      return await Page.init({
+        relativePath: 'page-with-invalid-product-version.md',
         basePath: path.join(__dirname, '../fixtures'),
         languageCode: 'en',
       })

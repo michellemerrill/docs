@@ -3,8 +3,8 @@ title: Configuring custom footers
 intro: 'You can give users easy access to enterprise-specific links by adding custom footers to {% data variables.product.product_name %}.'
 versions:
   ghec: '*'
-  ghes: '>=3.4'
-  ghae: 'issue-5487'
+  ghes: '*'
+  ghae: '>= 3.4'
 type: how_to
 topics:
   - Enterprise

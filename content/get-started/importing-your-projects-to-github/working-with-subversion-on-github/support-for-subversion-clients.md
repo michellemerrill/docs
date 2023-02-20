@@ -13,6 +13,8 @@ shortTitle: Support for Subversion clients
 ---
 GitHub supports Subversion clients via the HTTPS protocol. We use a Subversion bridge to communicate svn commands to GitHub.
 
+{% data reusables.subversion.sunset %}
+
 ## Supported Subversion features on GitHub
 
 ### Checkout
@@ -26,9 +28,9 @@ Subversion checkouts are different: they mix the repository data in the working 
 
 3. Make an empty checkout of the repository:
   ```shell
-  $ svn co --depth empty https://github.com/<em>user</em>/<em>repo</em>
+  $ svn co --depth empty https://github.com/USER/REPO
   > Checked out revision 1.
-  $ cd <em>repo</em>
+  $ cd REPO
   ```
 
 4. Get the `trunk` branch. The Subversion bridge maps trunk to the Git HEAD branch.
@@ -68,13 +70,13 @@ $ svn commit -m 'Added more_awesome topic branch'
 
 You can confirm that the new branch exists in the repository's branch dropdown:
 
-![branch-snapshot](/assets/images/help/branch/svnflow-branch-snapshot.png)
+![Screenshot of the repository page. A dropdown menu, labeled with a branch icon and "main", is highlighted with an orange outline.](/assets/images/help/branches/branch-selection-dropdown.png)
 
 You can also confirm the new branch via the command line:
 
 ```shell
 $ git fetch
-> From https://github.com/<em>user</em>/<em>repo</em>/
+> From https://github.com/USER/REPO/
 > * [new branch]    more_awesome -> origin/more_awesome
 ```
 
@@ -107,13 +109,13 @@ $ svn commit -m 'Test coverage for problems'
 To switch between branches, you'll probably want to start with a checkout of `trunk`:
 
 ```shell
-$ svn co --depth empty https://github.com/<em>user</em>/<em>repo</em>/trunk
+$ svn co --depth empty https://github.com/USER/REPO/trunk
 ```
 
 Then, you can switch to another branch:
 
 ```shell
-$ svn switch https://github.com/<em>user</em>/<em>repo</em>/branches/more_awesome
+$ svn switch https://github.com/USER/REPO/branches/more_awesome
 ```
 
 ## Finding the Git commit SHA for a Subversion commit
@@ -123,7 +125,7 @@ GitHub's Subversion server exposes the Git commit sha for each Subversion commit
 To see the commit SHA, you should ask for the `git-commit` unversioned remote property.
 
 ```shell
-$ svn propget git-commit --revprop -r HEAD https://github.com/<em>user</em>/<em>repo</em>
+$ svn propget git-commit --revprop -r HEAD https://github.com/USER/REPO
 05fcc584ed53d7b0c92e116cb7e64d198b13c4e3
 ```
 
@@ -131,4 +133,4 @@ With this commit SHA, you can, for example, look up the corresponding Git commit
 
 ## Further reading
 
-* "[Subversion properties supported by GitHub](/articles/subversion-properties-supported-by-github)"
+* "[AUTOTITLE](/get-started/importing-your-projects-to-github/working-with-subversion-on-github/subversion-properties-supported-by-github)"

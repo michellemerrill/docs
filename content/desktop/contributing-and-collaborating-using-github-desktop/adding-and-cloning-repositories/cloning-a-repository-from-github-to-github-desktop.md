@@ -10,13 +10,13 @@ shortTitle: Clone a GitHub repo
 ---
 {% tip %}
 
-**Tip:**  You also can use {% data variables.product.prodname_desktop %} to clone repositories that exist on {% data variables.product.prodname_dotcom %}.  For more information, see "[Cloning a repository from {% data variables.product.prodname_desktop %}](/desktop/guides/contributing-to-projects/cloning-a-repository-from-github-to-github-desktop/)."
+**Tip:**  You also can use {% data variables.product.prodname_desktop %} to clone repositories that exist on {% data variables.product.prodname_dotcom %}.  For more information, see "[AUTOTITLE](/desktop/contributing-and-collaborating-using-github-desktop/adding-and-cloning-repositories/cloning-a-repository-from-github-to-github-desktop)."
 
 {% endtip %}
 
 {% mac %}
 
-1. Sign in to {% data variables.product.product_location %} and {% data variables.product.prodname_desktop %} before you start to clone.
+1. Sign in to {% data variables.location.product_location %} and {% data variables.product.prodname_desktop %} before you start to clone.
 {% data reusables.repositories.navigate-to-repo %}
 {% data reusables.repositories.open-with-github-desktop %}
 5. Click **Choose...** and, using the Finder window, navigate to a local path where you want to clone the repository.
@@ -35,7 +35,7 @@ shortTitle: Clone a GitHub repo
 
 {% windows %}
 
-1. Sign in to {% data variables.product.product_location %} and {% data variables.product.prodname_desktop %} before you start to clone.
+1. Sign in to {% data variables.location.product_location %} and {% data variables.product.prodname_desktop %} before you start to clone.
 {% data reusables.repositories.navigate-to-repo %}
 {% data reusables.repositories.open-with-github-desktop %}
 5. Click **Choose...** and, using Windows Explorer, navigate to a local path where you want to clone the repository.

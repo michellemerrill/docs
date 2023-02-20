@@ -13,7 +13,6 @@ versions:
   ghae: '*'
   ghec: '*'
 type: reference
-miniTocMaxHeadingLevel: 4
 ---
 
 {% data reusables.actions.enterprise-beta %}
@@ -39,30 +38,30 @@ Action metadata files use YAML syntax. If you're new to YAML, you can read "[Lea
 
 ## `inputs`
 
-**Optional** Input parameters allow you to specify data that the action expects to use during runtime. {% data variables.product.prodname_dotcom %} stores input parameters as environment variables. Input ids with uppercase letters are converted to lowercase during runtime. We recommended using lowercase input ids.
+**Optional** Input parameters allow you to specify data that the action expects to use during runtime. {% data variables.product.prodname_dotcom %} stores input parameters as environment variables. Input ids with uppercase letters are converted to lowercase during runtime. We recommend using lowercase input ids.
 
 ### Example: Specifying inputs
 
-This example configures two inputs: numOctocats and octocatEyeColor. The numOctocats input is not required and will default to a value of '1'. The octocatEyeColor input is required and has no default value. Workflow files that use this action must use the `with` keyword to set an input value for octocatEyeColor. For more information about the `with` syntax, see "[Workflow syntax for {% data variables.product.prodname_actions %}](/articles/workflow-syntax-for-github-actions/#jobsjob_idstepswith)."
+This example configures two inputs: `num-octocats` and `octocat-eye-color`. The `num-octocats` input is not required and will default to a value of '1'; `octocat-eye-color` is required and has no default value. Workflow files that use this action must use the `with` keyword to set an input value for `octocat-eye-color`. For more information about the `with` syntax, see "[AUTOTITLE](/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepswith)."
 
 ```yaml
 inputs:
-  numOctocats:
+  num-octocats:
     description: 'Number of Octocats'
     required: false
     default: '1'
-  octocatEyeColor:
+  octocat-eye-color:
     description: 'Eye color of the Octocats'
     required: true
 ```
 
 When you specify an input in a workflow file or use a default input value, {% data variables.product.prodname_dotcom %} creates an environment variable for the input with the name `INPUT_<VARIABLE_NAME>`. The environment variable created converts input names to uppercase letters and replaces spaces with `_` characters.
 
-If the action is written using a [composite](/actions/creating-actions/creating-a-composite-action), then it will not automatically get `INPUT_<VARIABLE_NAME>`. If the conversion doesn't occur, you can change these inputs manually. 
+If the action is written using a [composite](/actions/creating-actions/creating-a-composite-action), then it will not automatically get `INPUT_<VARIABLE_NAME>`. If the conversion doesn't occur, you can change these inputs manually.
 
-To access the environment variable in a Docker container action, you must pass the input using the `args` keyword in the action metadata file. For more information about the action metadata file for Docker container actions, see "[Creating a Docker container action](/articles/creating-a-docker-container-action#creating-an-action-metadata-file)."
+To access the environment variable in a Docker container action, you must pass the input using the `args` keyword in the action metadata file. For more information about the action metadata file for Docker container actions, see "[AUTOTITLE](/actions/creating-actions/creating-a-docker-container-action#creating-an-action-metadata-file)."
 
-For example, if a workflow defined the `numOctocats` and `octocatEyeColor` inputs, the action code could read the values of the inputs using the `INPUT_NUMOCTOCATS` and `INPUT_OCTOCATEYECOLOR` environment variables.
+For example, if a workflow defined the `num-octocats` and `octocat-eye-color` inputs, the action code could read the values of the inputs using the `INPUT_NUM-OCTOCATS` and `INPUT_OCTOCAT-EYE-COLOR` environment variables.
 
 ### `inputs.<input_id>`
 
@@ -74,7 +73,7 @@ For example, if a workflow defined the `numOctocats` and `octocatEyeColor` input
 
 ### `inputs.<input_id>.required`
 
-**Required** A `boolean` to indicate whether the action requires the input parameter. Set to `true` when the parameter is required.
+**Optional** A `boolean` to indicate whether the action requires the input parameter. Set to `true` when the parameter is required.
 
 ### `inputs.<input_id>.default`
 
@@ -88,7 +87,9 @@ For example, if a workflow defined the `numOctocats` and `octocatEyeColor` input
 
 **Optional** Output parameters allow you to declare data that an action sets. Actions that run later in a workflow can use the output data set in previously run actions.  For example, if you had an action that performed the addition of two inputs (x + y = z), the action could output the sum (z) for other actions to use as an input.
 
-If you don't declare an output in your action metadata file, you can still set outputs and use them in a workflow. For more information on setting outputs in an action, see "[Workflow commands for {% data variables.product.prodname_actions %}](/actions/reference/workflow-commands-for-github-actions/#setting-an-output-parameter)."
+{% data reusables.actions.output-limitations %}
+
+If you don't declare an output in your action metadata file, you can still set outputs and use them in a workflow. For more information on setting outputs in an action, see "[AUTOTITLE](/actions/using-workflows/workflow-commands-for-github-actions#setting-an-output-parameter)."
 
 ### Example: Declaring outputs for Docker container and JavaScript actions
 
@@ -110,6 +111,8 @@ outputs:
 
 **Optional** `outputs` use the same parameters as `outputs.<output_id>` and `outputs.<output_id>.description` (see "[`outputs` for Docker container and JavaScript actions](#outputs-for-docker-container-and-javascript-actions)"), but also includes the `value` token.
 
+{% data reusables.actions.output-limitations %}
+
 ### Example: Declaring outputs for composite actions
 
 {% raw %}
@@ -121,8 +124,12 @@ outputs:
 runs:
   using: "composite"
   steps:
-    - id: random-number-generator
+    - id: random-number-generator{% endraw %}
+{%- ifversion actions-save-state-set-output-envs %}
+      run: echo "random-id=$(echo $RANDOM)" >> $GITHUB_OUTPUT
+{%- else %}
       run: echo "::set-output name=random-id::$(echo $RANDOM)"
+{%- endif %}{% raw %}
       shell: bash
 ```
 {% endraw %}
@@ -131,7 +138,7 @@ runs:
 
 **Required** The value that the output parameter will be mapped to. You can set this to a `string` or an expression with context. For example, you can use the `steps` context to set the `value` of an output to the output value of a step.
 
-For more information on how to use context syntax, see "[Contexts](/actions/learn-github-actions/contexts)."
+For more information on how to use context syntax, see "[AUTOTITLE](/actions/learn-github-actions/contexts)."
 
 ## `runs`
 
@@ -141,34 +148,34 @@ For more information on how to use context syntax, see "[Contexts](/actions/lear
 
 **Required** Configures the path to the action's code and the runtime used to execute the code.
 
-### Example: Using Node.js {% ifversion fpt or ghes > 3.3 or ghae-issue-5504 or ghec %}v16{% else %}v12{% endif %}
+### Example: Using Node.js {% ifversion fpt or ghes or ghae > 3.3 or ghec %}v16{% else %}v12{% endif %}
 
 ```yaml
 runs:
-  using: {% ifversion fpt or ghes > 3.3 or ghae-issue-5504 or ghec %}'node16'{% else %}'node12'{% endif %}
+  using: {% ifversion fpt or ghes or ghae > 3.3 or ghec %}'node16'{% else %}'node12'{% endif %}
   main: 'main.js'
 ```
 
-### `runs.using`
+### `runs.using` for JavaScript actions
 
-**Required** The runtime used to execute the code specified in [`main`](#runsmain).  
+**Required** The runtime used to execute the code specified in [`main`](#runsmain).
 
-- Use `node12` for Node.js v12.{% ifversion fpt or ghes > 3.3 or ghae-issue-5504 or ghec %}
+- Use `node12` for Node.js v12.{% ifversion fpt or ghes or ghae > 3.3 or ghec %}
 - Use `node16` for Node.js v16.{% endif %}
 
 ### `runs.main`
 
-**Required** The file that contains your action code. The runtime specified in [`using`](#runsusing) executes this file.
+**Required** The file that contains your action code. The runtime specified in [`using`](#runsusing-for-javascript-actions) executes this file.
 
 ### `runs.pre`
 
-**Optional** Allows you to run a script at the start of a job, before the `main:` action begins. For example, you can use `pre:` to run a prerequisite setup script. The runtime specified with the [`using`](#runsusing) syntax will execute this file. The `pre:` action always runs by default but you can override this using [`runs.pre-if`](#runspre-if).
+**Optional** Allows you to run a script at the start of a job, before the `main:` action begins. For example, you can use `pre:` to run a prerequisite setup script. The runtime specified with the [`using`](#runsusing-for-javascript-actions) syntax will execute this file. The `pre:` action always runs by default but you can override this using [`runs.pre-if`](#runspre-if).
 
 In this example, the `pre:` action runs a script called `setup.js`:
 
 ```yaml
 runs:
-  using: {% ifversion fpt or ghes > 3.3 or ghae-issue-5504 or ghec %}'node16'{% else %}'node12'{% endif %}
+  using: {% ifversion fpt or ghes or ghae > 3.3 or ghec %}'node16'{% else %}'node12'{% endif %}
   pre: 'setup.js'
   main: 'index.js'
   post: 'cleanup.js'
@@ -189,13 +196,13 @@ In this example, `cleanup.js` only runs on Linux-based runners:
 
 ### `runs.post`
 
-**Optional** Allows you to run a script at the end of a job, once the `main:` action has completed. For example, you can use `post:` to terminate certain processes or remove unneeded files. The runtime specified with the [`using`](#runsusing) syntax will execute this file.
+**Optional** Allows you to run a script at the end of a job, once the `main:` action has completed. For example, you can use `post:` to terminate certain processes or remove unneeded files. The runtime specified with the [`using`](#runsusing-for-javascript-actions) syntax will execute this file.
 
 In this example, the `post:` action runs a script called `cleanup.js`:
 
 ```yaml
 runs:
-  using: {% ifversion fpt or ghes > 3.3 or ghae-issue-5504 or ghec %}'node16'{% else %}'node12'{% endif %}
+  using: {% ifversion fpt or ghes or ghae > 3.3 or ghec %}'node16'{% else %}'node12'{% endif %}
   main: 'index.js'
   post: 'cleanup.js'
 ```
@@ -217,25 +224,17 @@ For example, this `cleanup.js` will only run on Linux-based runners:
 
 **Required** Configures the path to the composite action.
 
-### `runs.using`
+### `runs.using` for composite actions
 
 **Required** You must set this value to `'composite'`.
 
 ### `runs.steps`
 
-{% ifversion fpt or ghes > 3.2 or ghae-issue-4853 or ghec %}
 **Required** The steps that you plan to run in this action. These can be either `run` steps or `uses` steps.
-{% else %}
-**Required** The steps that you plan to run in this action.
-{% endif %}
 
 #### `runs.steps[*].run`
 
-{% ifversion fpt or ghes > 3.2 or ghae-issue-4853 or ghec %}
 **Optional** The command you want to run. This can be inline or a script in your action repository:
-{% else %}
-**Required** The command you want to run. This can be inline or a script in your action repository:
-{% endif %}
 
 {% raw %}
 ```yaml
@@ -257,22 +256,18 @@ runs:
       shell: bash
 ```
 
-For more information, see "[`github context`](/actions/reference/context-and-expression-syntax-for-github-actions#github-context)".
+For more information, see "[AUTOTITLE](/actions/learn-github-actions/contexts#github-context)".
 
 #### `runs.steps[*].shell`
 
-{% ifversion fpt or ghes > 3.2 or ghae-issue-4853 or ghec %}
-**Optional** The shell where you want to run the command. You can use any of the shells listed [here](/actions/reference/workflow-syntax-for-github-actions#jobsjob_idstepsshell). Required if `run` is set.
-{% else %}
-**Required** The shell where you want to run the command. You can use any of the shells listed [here](/actions/reference/workflow-syntax-for-github-actions#jobsjob_idstepsshell). Required if `run` is set.
-{% endif %}
+**Optional** The shell where you want to run the command. You can use any of the shells listed [here](/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsshell). Required if `run` is set.
 
-{% ifversion fpt or ghes > 3.3 or ghae-issue-5504 or ghec %}
+{% ifversion fpt or ghes or ghae > 3.3 or ghec %}
 #### `runs.steps[*].if`
 
 **Optional** You can use the `if` conditional to prevent a step from running unless a condition is met. You can use any supported context and expression to create a conditional.
 
-{% data reusables.github-actions.expression-syntax-if %} For more information, see "[Expressions](/actions/learn-github-actions/expressions)."
+{% data reusables.actions.expression-syntax-if %} For more information, see "[AUTOTITLE](/actions/learn-github-actions/expressions)."
 
 **Example: Using contexts**
 
@@ -286,7 +281,7 @@ steps:
 
 **Example: Using status check functions**
 
-The `my backup step` only runs when the previous step of a composite action fails. For more information, see "[Expressions](/actions/learn-github-actions/expressions#job-status-check-functions)."
+The `my backup step` only runs when the previous step of a composite action fails. For more information, see "[AUTOTITLE](/actions/learn-github-actions/expressions#status-check-functions)."
 
 ```yaml
 steps:
@@ -304,7 +299,7 @@ steps:
 
 #### `runs.steps[*].id`
 
-**Optional** A unique identifier for the step. You can use the `id` to reference the step in contexts. For more information, see "[Contexts](/actions/learn-github-actions/contexts)."
+**Optional** A unique identifier for the step. You can use the `id` to reference the step in contexts. For more information, see "[AUTOTITLE](/actions/learn-github-actions/contexts)."
 
 #### `runs.steps[*].env`
 
@@ -314,7 +309,6 @@ steps:
 
 **Optional**  Specifies the working directory where the command is run.
 
-{% ifversion fpt or ghes > 3.2 or ghae-issue-4853 or ghec %}
 #### `runs.steps[*].uses`
 
 **Optional**  Selects an action to run as part of a step in your job. An action is a reusable unit of code. You can use an action defined in the same repository as the workflow, a public repository, or in a [published Docker container image](https://hub.docker.com/).
@@ -324,7 +318,7 @@ We strongly recommend that you include the version of the action you are using b
 - Using the specific major action version allows you to receive critical fixes and security patches while still maintaining compatibility. It also assures that your workflow should still work.
 - Using the default branch of an action may be convenient, but if someone releases a new major version with a breaking change, your workflow could break.
 
-Some actions require inputs that you must set using the [`with`](/actions/reference/workflow-syntax-for-github-actions#jobsjob_idstepswith) keyword. Review the action's README file to determine the inputs required.
+Some actions require inputs that you must set using the [`with`](/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepswith) keyword. Review the action's README file to determine the inputs required.
 
 ```yaml
 runs:
@@ -333,9 +327,9 @@ runs:
     # Reference a specific commit
     - uses: actions/checkout@a81bbbf8298c0fa03ea29cdc473d45769f953675
     # Reference the major version of a release
-    - uses: actions/checkout@v2
+    - uses: {% data reusables.actions.action-checkout %}
     # Reference a specific version
-    - uses: actions/checkout@v2.2.0
+    - uses: {% data reusables.actions.action-checkout %}.2.0
     # Reference a branch
     - uses: actions/checkout@main
     # References a subdirectory in a public GitHub repository at a specific branch, ref, or SHA
@@ -350,7 +344,7 @@ runs:
 
 #### `runs.steps[*].with`
 
-**Optional**  A `map` of the input parameters defined by the action. Each input parameter is a key/value pair.  Input parameters are set as environment variables. The variable is prefixed with INPUT_ and converted to upper case.
+**Optional**  A `map` of the input parameters defined by the action. Each input parameter is a key/value pair. For more information, see [Example: Specifying inputs](#example-specifying-inputs).
 
 ```yaml
 runs:
@@ -361,8 +355,15 @@ runs:
       with:
         first_name: Mona
         middle_name: The
-        last_name: Octocat  
+        last_name: Octocat
 ```
+
+{% ifversion ghes > 3.5 or ghae > 3.5 %}
+
+#### `runs.steps[*].continue-on-error`
+
+**Optional**  Prevents the action from failing when a step fails. Set to `true` to allow the action to pass when this step fails.
+
 {% endif %}
 
 ## `runs` for Docker container actions
@@ -385,7 +386,7 @@ runs:
   image: 'docker://debian:stretch-slim'
 ```
 
-### `runs.using`
+### `runs.using` for Docker container actions
 
 **Required** You must set this value to `'docker'`.
 
@@ -393,7 +394,7 @@ runs:
 
 **Optional** Allows you to run a script before the `entrypoint` action begins. For example, you can use `pre-entrypoint:` to run a prerequisite setup script. {% data variables.product.prodname_actions %} uses `docker run` to launch this action, and runs the script inside a new container that uses the same base image. This means that the runtime state is different from the main `entrypoint` container, and any states you require must be accessed in either the workspace, `HOME`, or as a `STATE_` variable. The `pre-entrypoint:` action always runs by default but you can override this using [`runs.pre-if`](#runspre-if).
 
-The runtime specified with the [`using`](#runsusing) syntax will execute this file.
+The runtime specified with the [`using`](#runsusing-for-docker-container-actions) syntax will execute this file.
 
 In this example, the `pre-entrypoint:` action runs a script called `setup.sh`:
 
@@ -419,9 +420,9 @@ runs:
 
 **Optional** Overrides the Docker `ENTRYPOINT` in the `Dockerfile`, or sets it if one wasn't already specified. Use `entrypoint` when the `Dockerfile` does not specify an `ENTRYPOINT` or you want to override the `ENTRYPOINT` instruction. If you omit `entrypoint`, the commands you specify in the Docker `ENTRYPOINT` instruction will execute. The Docker `ENTRYPOINT` instruction has a _shell_ form and _exec_ form. The Docker `ENTRYPOINT` documentation recommends using the _exec_ form of the `ENTRYPOINT` instruction.
 
-For more information about how the `entrypoint` executes, see "[Dockerfile support for {% data variables.product.prodname_actions %}](/actions/creating-actions/dockerfile-support-for-github-actions/#entrypoint)."
+For more information about how the `entrypoint` executes, see "[AUTOTITLE](/actions/creating-actions/dockerfile-support-for-github-actions#entrypoint)."
 
-### `post-entrypoint`
+### `runs.post-entrypoint`
 
 **Optional**  Allows you to run a cleanup script once the `runs.entrypoint` action has completed. {% data variables.product.prodname_actions %} uses `docker run` to launch this action. Because  {% data variables.product.prodname_actions %} runs the script inside a new container using the same base image, the runtime state is different from the main `entrypoint` container. You can access any state you need in either the workspace, `HOME`, or as a `STATE_` variable. The `post-entrypoint:` action always runs by default but you can override this using [`runs.post-if`](#runspost-if).
 
@@ -441,11 +442,11 @@ runs:
 
 The `args` are used in place of the `CMD` instruction in a `Dockerfile`. If you use `CMD` in your `Dockerfile`, use the guidelines ordered by preference:
 
-{% data reusables.github-actions.dockerfile-guidelines %}
+{% data reusables.actions.dockerfile-guidelines %}
 
 If you need to pass environment variables into an action, make sure your action runs a command shell to perform variable substitution. For example, if your `entrypoint` attribute is set to `"sh -c"`, `args` will be run in a command shell. Alternatively, if your `Dockerfile` uses an `ENTRYPOINT` to run the same command (`"sh -c"`), `args` will execute in a command shell.
 
-For more information about using the `CMD` instruction with {% data variables.product.prodname_actions %}, see "[Dockerfile support for {% data variables.product.prodname_actions %}](/actions/creating-actions/dockerfile-support-for-github-actions/#cmd)."
+For more information about using the `CMD` instruction with {% data variables.product.prodname_actions %}, see "[AUTOTITLE](/actions/creating-actions/dockerfile-support-for-github-actions#cmd)."
 
 #### Example: Defining arguments for the Docker container
 
@@ -463,13 +464,13 @@ runs:
 
 ## `branding`
 
-You can use a color and [Feather](https://feathericons.com/) icon to create a badge to personalize and distinguish your action. Badges are shown next to your action name in [{% data variables.product.prodname_marketplace %}](https://github.com/marketplace?type=actions).
+**Optional** You can use a color and [Feather](https://feathericons.com/) icon to create a badge to personalize and distinguish your action. Badges are shown next to your action name in [{% data variables.product.prodname_marketplace %}](https://github.com/marketplace?type=actions).
 
 ### Example: Configuring branding for an action
 
 ```yaml
 branding:
-  icon: 'award'  
+  icon: 'award'
   color: 'green'
 ```
 
@@ -510,9 +511,9 @@ The name of the v4.28.0 [Feather](https://feathericons.com/) icon to use. Brand 
 
 Here is an exhaustive list of all currently supported icons:
 
-<!-- 
+<!--
   This table should match the icon list in `app/models/repository_actions/icons.rb` in the internal github repo.
-  To support a new icon, update `app/models/repository_actions/icons.rb` and add the svg to `/static/images/icons/feather` in the internal github repo. 
+  To support a new icon, update `app/models/repository_actions/icons.rb` and add the svg to `/static/images/icons/feather` in the internal github repo.
 -->
 
 <table>
@@ -655,254 +656,249 @@ Here is an exhaustive list of all currently supported icons:
 <td>eye</td>
 </tr>
 <tr>
-<td>facebook</td>
 <td>fast-forward</td>
 <td>feather</td>
 <td>file-minus</td>
+<td>file-plus</td>
 </tr>
 <tr>
-<td>file-plus</td>
 <td>file-text</td>
 <td>file</td>
 <td>film</td>
+<td>filter</td>
 </tr>
 <tr>
-<td>filter</td>
 <td>flag</td>
 <td>folder-minus</td>
 <td>folder-plus</td>
+<td>folder</td>
 </tr>
 <tr>
-<td>folder</td>
 <td>gift</td>
 <td>git-branch</td>
 <td>git-commit</td>
+<td>git-merge</td>
 </tr>
 <tr>
-<td>git-merge</td>
 <td>git-pull-request</td>
 <td>globe</td>
 <td>grid</td>
+<td>hard-drive</td>
 </tr>
 <tr>
-<td>hard-drive</td>
 <td>hash</td>
 <td>headphones</td>
 <td>heart</td>
+<td>help-circle</td>
 </tr>
 <tr>
-<td>help-circle</td>
 <td>home</td>
 <td>image</td>
 <td>inbox</td>
+<td>info</td>
 </tr>
 <tr>
-<td>info</td>
 <td>italic</td>
 <td>layers</td>
 <td>layout</td>
+<td>life-buoy</td>
 </tr>
 <tr>
-<td>life-buoy</td>
 <td>link-2</td>
 <td>link</td>
 <td>list</td>
+<td>loader</td>
 </tr>
 <tr>
-<td>loader</td>
 <td>lock</td>
 <td>log-in</td>
 <td>log-out</td>
+<td>mail</td>
 </tr>
 <tr>
-<td>mail</td>
 <td>map-pin</td>
 <td>map</td>
 <td>maximize-2</td>
+<td>maximize</td>
 </tr>
 <tr>
-<td>maximize</td>
 <td>menu</td>
 <td>message-circle</td>
 <td>message-square</td>
+<td>mic-off</td>
 </tr>
 <tr>
-<td>mic-off</td>
 <td>mic</td>
 <td>minimize-2</td>
 <td>minimize</td>
+<td>minus-circle</td>
 </tr>
 <tr>
-<td>minus-circle</td>
 <td>minus-square</td>
 <td>minus</td>
 <td>monitor</td>
+<td>moon</td>
 </tr>
 <tr>
-<td>moon</td>
 <td>more-horizontal</td>
 <td>more-vertical</td>
 <td>move</td>
+<td>music</td>
 </tr>
 <tr>
-<td>music</td>
 <td>navigation-2</td>
 <td>navigation</td>
 <td>octagon</td>
+<td>package</td>
 </tr>
 <tr>
-<td>package</td>
 <td>paperclip</td>
 <td>pause-circle</td>
 <td>pause</td>
+<td>percent</td>
 </tr>
 <tr>
-<td>percent</td>
 <td>phone-call</td>
 <td>phone-forwarded</td>
 <td>phone-incoming</td>
+<td>phone-missed</td>
 </tr>
 <tr>
-<td>phone-missed</td>
 <td>phone-off</td>
 <td>phone-outgoing</td>
 <td>phone</td>
+<td>pie-chart</td>
 </tr>
 <tr>
-<td>pie-chart</td>
 <td>play-circle</td>
 <td>play</td>
 <td>plus-circle</td>
+<td>plus-square</td>
 </tr>
 <tr>
-<td>plus-square</td>
 <td>plus</td>
 <td>pocket</td>
 <td>power</td>
+<td>printer</td>
 </tr>
 <tr>
-<td>printer</td>
 <td>radio</td>
 <td>refresh-ccw</td>
 <td>refresh-cw</td>
+<td>repeat</td>
 </tr>
 <tr>
-<td>repeat</td>
 <td>rewind</td>
 <td>rotate-ccw</td>
 <td>rotate-cw</td>
+<td>rss</td>
 </tr>
 <tr>
-<td>rss</td>
 <td>save</td>
 <td>scissors</td>
 <td>search</td>
+<td>send</td>
 </tr>
 <tr>
-<td>send</td>
 <td>server</td>
 <td>settings</td>
 <td>share-2</td>
+<td>share</td>
 </tr>
 <tr>
-<td>share</td>
 <td>shield-off</td>
 <td>shield</td>
 <td>shopping-bag</td>
+<td>shopping-cart</td>
 </tr>
 <tr>
-<td>shopping-cart</td>
 <td>shuffle</td>
 <td>sidebar</td>
 <td>skip-back</td>
+<td>skip-forward</td>
 </tr>
 <tr>
-<td>skip-forward</td>
 <td>slash</td>
 <td>sliders</td>
 <td>smartphone</td>
+<td>speaker</td>
 </tr>
 <tr>
-<td>speaker</td>
 <td>square</td>
 <td>star</td>
 <td>stop-circle</td>
+<td>sun</td>
 </tr>
 <tr>
-<td>sun</td>
 <td>sunrise</td>
 <td>sunset</td>
 <td>tablet</td>
+<td>tag</td>
 </tr>
 <tr>
-<td>tag</td>
 <td>target</td>
 <td>terminal</td>
 <td>thermometer</td>
+<td>thumbs-down</td>
 </tr>
 <tr>
-<td>thumbs-down</td>
 <td>thumbs-up</td>
 <td>toggle-left</td>
 <td>toggle-right</td>
+<td>trash-2</td>
 </tr>
 <tr>
-<td>trash-2</td>
 <td>trash</td>
 <td>trending-down</td>
 <td>trending-up</td>
+<td>triangle</td>
 </tr>
 <tr>
-<td>triangle</td>
 <td>truck</td>
 <td>tv</td>
 <td>type</td>
+<td>umbrella</td>
 </tr>
 <tr>
-<td>umbrella</td>
 <td>underline</td>
 <td>unlock</td>
 <td>upload-cloud</td>
+<td>upload</td>
 </tr>
 <tr>
-<td>upload</td>
 <td>user-check</td>
 <td>user-minus</td>
 <td>user-plus</td>
+<td>user-x</td>
 </tr>
 <tr>
-<td>user-x</td>
 <td>user</td>
 <td>users</td>
 <td>video-off</td>
+<td>video</td>
 </tr>
 <tr>
-<td>video</td>
 <td>voicemail</td>
 <td>volume-1</td>
 <td>volume-2</td>
+<td>volume-x</td>
 </tr>
 <tr>
-<td>volume-x</td>
 <td>volume</td>
 <td>watch</td>
 <td>wifi-off</td>
+<td>wifi</td>
 </tr>
 <tr>
-<td>wifi</td>
 <td>wind</td>
 <td>x-circle</td>
 <td>x-square</td>
+<td>x</td>
 </tr>
 <tr>
-<td>x</td>
 <td>zap-off</td>
 <td>zap</td>
 <td>zoom-in</td>
-</tr>
-<tr>
 <td>zoom-out</td>
-<td></td>
-<td></td>
-<td></td>
+</tr>
 </table>

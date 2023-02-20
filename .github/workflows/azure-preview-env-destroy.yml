@@ -28,6 +28,7 @@ jobs:
   destory-azure-preview-env:
     name: Destroy
     runs-on: ubuntu-latest
+    if: github.repository == 'github/docs-internal' || github.repository == 'github/docs'
     timeout-minutes: 5
     env:
       PR_NUMBER: ${{ github.event.number || github.event.inputs.PR_NUMBER }}
@@ -39,7 +40,7 @@ jobs:
           creds: ${{ secrets.NONPROD_AZURE_CREDENTIALS }}
 
       - name: Check out repo
-        uses: actions/checkout@1e204e9a9253d643386038d443f96446fa156a97
+        uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8
 
       - name: Get preview app info
         env:
@@ -61,10 +62,10 @@ jobs:
       # This will fail if the IMAGE_REPO doesn't exist, but we don't care
       - name: 'Untag all docker images for this PR'
         run: |
-          az acr repository delete -n ${{ secrets.NONPROD_REGISTRY_NAME }} --repository ${{ env.IMAGE_REPO }} -y || true
+          az acr repository delete -n ${{ secrets.NONPROD_REGISTRY_SERVER }} --repository ${{ env.IMAGE_REPO }} -y || true
 
       # Remove all GitHub deployments from this environment and remove the environment
-      - uses: strumwolf/delete-deployment-environment@45c821e46baa405e25410700fe2e9643929706a0
+      - uses: strumwolf/delete-deployment-environment@3cb547f8ec03ee6c0473d90cce57c74c688c2510
         with:
           # The token provided by the workflow does not have the permissions to delete created environments
           token: ${{ secrets.DOCUBOT_REPO_PAT }}

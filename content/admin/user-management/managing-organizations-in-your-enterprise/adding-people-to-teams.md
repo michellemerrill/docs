@@ -6,7 +6,7 @@ redirect_from:
   - /enterprise/admin/guides/user-management/adding-or-inviting-people-to-teams
   - /enterprise/admin/user-management/adding-people-to-teams
   - /admin/user-management/adding-people-to-teams
-intro: 'Once a team has been created, organization admins can add users from {% data variables.product.product_location %} to the team and determine which repositories they have access to.'
+intro: 'Once a team has been created, organization admins can add users from {% data variables.location.product_location %} to the team and determine which repositories they have access to.'
 versions:
   ghes: '*'
   ghae: '*'
@@ -17,7 +17,7 @@ topics:
   - Teams
   - User account
 ---
-Each team has its own individually defined [access permissions for repositories owned by your organization](/articles/permission-levels-for-an-organization).
+Each team has its own individually defined [access permissions for repositories owned by your organization](/organizations/managing-peoples-access-to-your-organization-with-roles/roles-in-an-organization).
 
 - Members with the owner role can add or remove existing organization members from all teams.
 - Members of teams that give admin permissions can only modify team membership and repositories for that team.

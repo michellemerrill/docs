@@ -1,20 +1,25 @@
 ---
 title: Viewing insights for your organization
 intro: 'Organization insights provide data about your organization''s activity, contributions, and dependencies.'
-product: '{% data reusables.gated-features.org-insights %}'
 redirect_from:
   - /articles/viewing-insights-for-your-organization
   - /github/setting-up-and-managing-organizations-and-teams/viewing-insights-for-your-organization
 versions:
-  fpt: '*'
   ghec: '*'
 topics:
   - Organizations
   - Teams
 shortTitle: View organization insights
+permissions: Organization members can view organization insights.
 ---
 
-All members of an organization can view organization insights. For more information, see "[Roles in an organization](/organizations/managing-peoples-access-to-your-organization-with-roles/roles-in-an-organization)."
+{% note %}
+
+**Note:** To view organization insights, your organization must use {% data variables.product.prodname_ghe_cloud %}. {% data reusables.enterprise.link-to-ghec-trial %}
+
+{% endnote %}
+
+## About organization insights
 
 You can use organization activity insights to help you better understand how members of your organization are using {% data variables.product.product_name %} to collaborate and work on code. Dependency insights can help you track, report, and act on your organization's open source usage.
 
@@ -41,7 +46,7 @@ With organization activity insights you can view weekly, monthly, and yearly dat
 
 {% note %}
 
-**Note:** Please make sure you have enabled the [Dependency Graph](/code-security/supply-chain-security/understanding-your-software-supply-chain/about-the-dependency-graph#enabling-the-dependency-graph). 
+**Note:** Please make sure you have enabled the [Dependency Graph](/code-security/supply-chain-security/understanding-your-software-supply-chain/configuring-the-dependency-graph). 
 
 {% endnote %}
 
@@ -61,7 +66,7 @@ With dependency insights you can view vulnerabilities, licenses, and other impor
   ![My organizations vulnerable dependents](/assets/images/help/organizations/org-insights-dependencies-vulnerable-item.png)
 
 ## Further reading
- - "[About organizations](/organizations/collaborating-with-groups-in-organizations/about-organizations)"
- - "[Exploring the dependencies of a repository](/github/visualizing-repository-data-with-graphs/exploring-the-dependencies-of-a-repository)"
- - "[Changing the visibility of your organization's dependency insights](/organizations/managing-organization-settings/changing-the-visibility-of-your-organizations-dependency-insights)"{% ifversion ghec %}
-- "[Enforcing policies for dependency insights in your enterprise](/admin/policies/enforcing-policies-for-your-enterprise/enforcing-policies-for-dependency-insights-in-your-enterprise)"{% endif %}
+ - "[AUTOTITLE](/organizations/collaborating-with-groups-in-organizations/about-organizations)"
+ - "[AUTOTITLE](/code-security/supply-chain-security/understanding-your-software-supply-chain/exploring-the-dependencies-of-a-repository)"
+ - "[AUTOTITLE](/organizations/managing-organization-settings/changing-the-visibility-of-your-organizations-dependency-insights)"{% ifversion ghec %}
+- "[AUTOTITLE](/admin/policies/enforcing-policies-for-your-enterprise/enforcing-policies-for-dependency-insights-in-your-enterprise)"{% endif %}

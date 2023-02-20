@@ -15,13 +15,13 @@ shortTitle: Code migration tools
 ---
 {% ifversion fpt or ghec %}
 
-We recommend using [GitHub Importer](/articles/about-github-importer) to import projects from Subversion, Mercurial, Team Foundation Version Control (TFVC), or another Git repository. You can also use these external tools to convert your project to Git.
+We recommend using [GitHub Importer](/get-started/importing-your-projects-to-github/importing-source-code-to-github/about-github-importer) to import projects from Subversion, Mercurial, Team Foundation Version Control (TFVC), or another Git repository. You can also use these external tools to convert your project to Git.
 
 {% endif %}
 
 ## Importing from Subversion
 
-In a typical Subversion environment, multiple projects are stored in a single root repository. On GitHub, each of these projects will usually map to a separate Git repository for a user account or organization. We suggest importing each part of your Subversion repository to a separate GitHub repository if:
+In a typical Subversion environment, multiple projects are stored in a single root repository. On GitHub, each of these projects will usually map to a separate Git repository for a personal account or organization. We suggest importing each part of your Subversion repository to a separate GitHub repository if:
 
 * Collaborators need to check out or commit to that part of the project separately from the other parts
 * You want different parts to have their own access permissions
@@ -43,7 +43,7 @@ For more information about moving from TFVC (a centralized version control syste
 
 {% tip %}
 
-**Tip:** After you've successfully converted your project to Git, you can [push it to {% data variables.product.prodname_dotcom %}](/github/getting-started-with-github/pushing-commits-to-a-remote-repository/).
+**Tip:** After you've successfully converted your project to Git, you can [push it to {% data variables.product.prodname_dotcom %}](/get-started/using-git/pushing-commits-to-a-remote-repository).
 
 {% endtip %}
 
@@ -51,8 +51,8 @@ For more information about moving from TFVC (a centralized version control syste
 
 ## Further reading
 
-- "[About GitHub Importer](/articles/about-github-importer)"
-- "[Importing a repository with GitHub Importer](/articles/importing-a-repository-with-github-importer)"
+- "[AUTOTITLE](/get-started/importing-your-projects-to-github/importing-source-code-to-github/about-github-importer)"
+- "[AUTOTITLE](/get-started/importing-your-projects-to-github/importing-source-code-to-github/importing-a-repository-with-github-importer)"
 - [{% data variables.product.prodname_learning %}]({% data variables.product.prodname_learning_link %})
 
 {% endif %}

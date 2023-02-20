@@ -9,6 +9,7 @@ redirect_from:
   - /github/managing-files-in-a-repository/adding-a-file-to-a-repository-using-the-command-line
   - /github/managing-files-in-a-repository/managing-files-on-github/adding-a-file-to-a-repository
   - /github/managing-files-in-a-repository/managing-files-using-the-command-line/adding-a-file-to-a-repository-using-the-command-line
+  - /github/managing-large-files/about-large-files-on-github
 versions:
   fpt: '*'
   ghes: '*'
@@ -21,7 +22,7 @@ shortTitle: Add a file
 
 ## Adding a file to a repository on {% data variables.product.product_name %}
 
-Files that you add to a repository via a browser are limited to {% data variables.large_files.max_github_browser_size %} per file. You can add larger files, up to {% data variables.large_files.max_github_size %} each, via the command line. For more information, see "[Adding a file to a repository using the command line](#adding-a-file-to-a-repository-using-the-command-line)."
+Files that you add to a repository via a browser are limited to {% data variables.large_files.max_github_browser_size %} per file. You can add larger files, up to {% data variables.large_files.max_github_size %} each, via the command line. For more information, see "[Adding a file to a repository using the command line](#adding-a-file-to-a-repository-using-the-command-line)." To add files larger than {% data variables.large_files.max_github_size %}, you must use {% data variables.large_files.product_name_long %}. For more information, see "[AUTOTITLE](/repositories/working-with-files/managing-large-files/about-large-files-on-github)."
 
 {% tip %}
 
@@ -43,11 +44,11 @@ Files that you add to a repository via a browser are limited to {% data variable
 
 ## Adding a file to a repository using the command line
 
-You can upload an existing file to a repository on {% ifversion ghae %}{% data variables.product.product_name %}{% else %}{% data variables.product.product_location %}{% endif %} using the command line.
+You can upload an existing file to a repository on {% ifversion ghae %}{% data variables.product.product_name %}{% else %}{% data variables.location.product_location %}{% endif %} using the command line.
 
 {% tip %}
 
-**Tip:** You can also [add an existing file to a repository from the {% data variables.product.product_name %} website](/articles/adding-a-file-to-a-repository).
+**Tip:** You can also [add an existing file to a repository from the {% data variables.product.product_name %} website](/repositories/working-with-files/managing-files/adding-a-file-to-a-repository).
 
 {% endtip %}
 
@@ -72,4 +73,4 @@ You can upload an existing file to a repository on {% ifversion ghae %}{% data v
 
 ## Further reading
 
-- "[Adding an existing project to GitHub using the command line](/articles/adding-an-existing-project-to-github-using-the-command-line)"
+- "[AUTOTITLE](/get-started/importing-your-projects-to-github/importing-source-code-to-github//adding-locally-hosted-code-to-github)"

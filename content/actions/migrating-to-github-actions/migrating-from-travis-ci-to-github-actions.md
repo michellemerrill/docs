@@ -28,8 +28,8 @@ This guide helps you migrate from Travis CI to {% data variables.product.prodnam
 
 Before starting your migration to {% data variables.product.prodname_actions %}, it would be useful to become familiar with how it works:
 
-- For a quick example that demonstrates a {% data variables.product.prodname_actions %} job, see "[Quickstart for {% data variables.product.prodname_actions %}](/actions/quickstart)."
-- To learn the essential {% data variables.product.prodname_actions %} concepts, see "[Introduction to GitHub Actions](/actions/learn-github-actions/introduction-to-github-actions)."
+- For a quick example that demonstrates a {% data variables.product.prodname_actions %} job, see "[AUTOTITLE](/actions/quickstart)."
+- To learn the essential {% data variables.product.prodname_actions %} concepts, see "[AUTOTITLE](/actions/learn-github-actions/understanding-github-actions)."
 
 ## Comparing job execution
 
@@ -41,28 +41,28 @@ To give you control over when CI tasks are executed, a {% data variables.product
 
 ### Using YAML syntax
 
-Travis CI and {% data variables.product.prodname_actions %} both use YAML to create jobs and workflows, and these files are stored in the code's repository. For more information on how {% data variables.product.prodname_actions %} uses YAML, see ["Creating a workflow file](/actions/learn-github-actions/introduction-to-github-actions#create-an-example-workflow)."
+Travis CI and {% data variables.product.prodname_actions %} both use YAML to create jobs and workflows, and these files are stored in the code's repository. For more information on how {% data variables.product.prodname_actions %} uses YAML, see ["Creating a workflow file](/actions/learn-github-actions/understanding-github-actions#create-an-example-workflow)."
 
-### Custom environment variables
+### Custom variables
 
-Travis CI lets you set environment variables and share them between stages. Similarly, {% data variables.product.prodname_actions %} lets you define environment variables for a step, job, or workflow. For more information, see ["Environment variables](/actions/reference/environment-variables)."
+Travis CI lets you set variables and share them between stages. Similarly, {% data variables.product.prodname_actions %} lets you define variables for a workflows. For more information, see "[AUTOTITLE](/actions/learn-github-actions/variables)."
 
-### Default environment variables
+### Default variables
 
-Travis CI and {% data variables.product.prodname_actions %} both include default environment variables that you can use in your YAML files. For {% data variables.product.prodname_actions %}, you can see these listed in "[Default environment variables](/actions/reference/environment-variables#default-environment-variables)."
+Travis CI and {% data variables.product.prodname_actions %} both include default environment variables that you can use in your YAML files. For {% data variables.product.prodname_actions %}, you can see these listed in "[AUTOTITLE](/actions/learn-github-actions/variables#default-environment-variables)."
 
 ### Parallel job processing
 
-Travis CI can use `stages` to run jobs in parallel. Similarly, {% data variables.product.prodname_actions %} runs `jobs` in parallel. For more information, see "[Creating dependent jobs](/actions/learn-github-actions/managing-complex-workflows#creating-dependent-jobs)."
+Travis CI can use `stages` to run jobs in parallel. Similarly, {% data variables.product.prodname_actions %} runs `jobs` in parallel. For more information, see "[AUTOTITLE](/actions/using-workflows/about-workflows#creating-dependent-jobs)."
 
 ### Status badges
 
 Travis CI and {% data variables.product.prodname_actions %} both support status badges, which let you indicate whether a build is passing or failing.
-For more information, see ["Adding a workflow status badge to your repository](/actions/managing-workflow-runs/adding-a-workflow-status-badge)."
+For more information, see ["Adding a workflow status badge to your repository](/actions/monitoring-and-troubleshooting-workflows/adding-a-workflow-status-badge)."
 
-### Using a build matrix
+### Using a matrix
 
-Travis CI and {% data variables.product.prodname_actions %} both support a build matrix, allowing you to perform testing using combinations of operating systems and software packages. For more information, see "[Using a build matrix](/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix)."
+Travis CI and {% data variables.product.prodname_actions %} both support a matrix, allowing you to perform testing using combinations of operating systems and software packages. For more information, see "[AUTOTITLE](/actions/using-jobs/using-a-matrix-for-your-jobs)."
 
 Below is an example comparing the syntax for each system:
 
@@ -102,7 +102,7 @@ jobs:
 
 ### Targeting specific branches
 
-Travis CI and {% data variables.product.prodname_actions %} both allow you to target your CI to a specific branch. For more information, see "[Workflow syntax for GitHub Actions](/actions/reference/workflow-syntax-for-github-actions#onpushbranchestagsbranches-ignoretags-ignore)."
+Travis CI and {% data variables.product.prodname_actions %} both allow you to target your CI to a specific branch. For more information, see "[AUTOTITLE](/actions/using-workflows/workflow-syntax-for-github-actions#onpushbranchestagsbranches-ignoretags-ignore)."
 
 Below is an example of the syntax for each system:
 
@@ -165,22 +165,22 @@ git:
 {% endraw %}
 </td>
 <td class="d-table-cell v-align-top">
-{% raw %}
+
 ```yaml
-- uses: actions/checkout@v2
+- uses: {% data reusables.actions.action-checkout %}
   with:
     submodules: false
 ```
-{% endraw %}
+
 </td>
 </tr>
 </table>
 
 ### Using environment variables in a matrix
 
-Travis CI and {% data variables.product.prodname_actions %} can both add custom environment variables to a test matrix, which allows you to refer to the variable in a later step.
+Travis CI and {% data variables.product.prodname_actions %} can both add custom variables to a test matrix, which allows you to refer to the variable in a later step.
 
-In {% data variables.product.prodname_actions %}, you can use the `include` key to add custom environment variables to a matrix. {% data reusables.github-actions.matrix-variable-example %}
+In {% data variables.product.prodname_actions %}, you can use the `include` key to add custom environment variables to a matrix. {% data reusables.actions.matrix-variable-example %}
 
 ## Key features in {% data variables.product.prodname_actions %}
 
@@ -188,11 +188,11 @@ When migrating from Travis CI, consider the following key features in {% data va
 
 ### Storing secrets
 
-{% data variables.product.prodname_actions %} allows you to store secrets and reference them in your jobs. {% data variables.product.prodname_actions %} organizations can limit which repositories can access organization secrets. {% ifversion fpt or ghes > 3.0 or ghae or ghec %}Environment protection rules can require manual approval for a workflow to access environment secrets. {% endif %}For more information, see "[Encrypted secrets](/actions/reference/encrypted-secrets)."
+{% data variables.product.prodname_actions %} allows you to store secrets and reference them in your jobs. {% data variables.product.prodname_actions %} organizations can limit which repositories can access organization secrets. Environment protection rules can require manual approval for a workflow to access environment secrets. For more information, see "[AUTOTITLE](/actions/security-guides/encrypted-secrets)."
 
 ### Sharing files between jobs and workflows
 
-{% data variables.product.prodname_actions %} includes integrated support for artifact storage, allowing you to share files between jobs in a workflow. You can also save the resulting files and share them with other workflows. For more information, see "[Sharing data between jobs](/actions/learn-github-actions/essential-features-of-github-actions#sharing-data-between-jobs)."
+{% data variables.product.prodname_actions %} includes integrated support for artifact storage, allowing you to share files between jobs in a workflow. You can also save the resulting files and share them with other workflows. For more information, see "[AUTOTITLE](/actions/learn-github-actions/essential-features-of-github-actions#sharing-data-between-jobs)."
 
 ### Hosting your own runners
 
@@ -202,22 +202,23 @@ If your jobs require specific hardware or software, {% data variables.product.pr
 
 ### Concurrent jobs and execution time
 
-The concurrent jobs and workflow execution times in {% data variables.product.prodname_actions %} can vary depending on your {% data variables.product.company_short %} plan. For more information, see "[Usage limits, billing, and administration](/actions/reference/usage-limits-billing-and-administration)."
+The concurrent jobs and workflow execution times in {% data variables.product.prodname_actions %} can vary depending on your {% data variables.product.company_short %} plan. For more information, see "[AUTOTITLE](/actions/learn-github-actions/usage-limits-billing-and-administration)."
 
 {% endif %}
 
 ### Using different languages in {% data variables.product.prodname_actions %}
 
 When working with different languages in {% data variables.product.prodname_actions %}, you can create a step in your job to set up your language dependencies. For more information about working with a particular language, see the specific guide:
-  - [Building and testing Node.js or Python](/actions/guides/building-and-testing-nodejs-or-python)
-  - [Building and testing PowerShell](/actions/guides/building-and-testing-powershell)
-  - [Building and testing Java with Maven](/actions/guides/building-and-testing-java-with-maven)
-  - [Building and testing Java with Gradle](/actions/guides/building-and-testing-java-with-gradle)
-  - [Building and testing Java with Ant](/actions/guides/building-and-testing-java-with-ant)
+  - [Building and testing Node.js](/actions/automating-builds-and-tests/building-and-testing-nodejs)
+  - [Building and testing Python](/actions/automating-builds-and-tests/building-and-testing-python)
+  - [Building and testing PowerShell](/actions/automating-builds-and-tests/building-and-testing-powershell)
+  - [Building and testing Java with Maven](/actions/automating-builds-and-tests/building-and-testing-java-with-maven)
+  - [Building and testing Java with Gradle](/actions/automating-builds-and-tests/building-and-testing-java-with-gradle)
+  - [Building and testing Java with Ant](/actions/automating-builds-and-tests/building-and-testing-java-with-ant)
 
 ## Executing scripts
 
-{% data variables.product.prodname_actions %} can use `run` steps to run scripts or shell commands. To use a particular shell, you can specify the `shell` type when providing the path to the script. For more information, see "[Workflow syntax for {% data variables.product.prodname_actions %}](/actions/reference/workflow-syntax-for-github-actions#jobsjob_idstepsrun)."
+{% data variables.product.prodname_actions %} can use `run` steps to run scripts or shell commands. To use a particular shell, you can specify the `shell` type when providing the path to the script. For more information, see "[AUTOTITLE](/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsrun)."
 
 For example:
 
@@ -234,15 +235,15 @@ When migrating to {% data variables.product.prodname_actions %}, there are diffe
 
 ### Script error handling
 
-{% data variables.product.prodname_actions %} stops a job immediately if one of the steps returns an error code. For more information, see "[Workflow syntax for {% data variables.product.prodname_actions %}](/actions/reference/workflow-syntax-for-github-actions#exit-codes-and-error-action-preference)."
+{% data variables.product.prodname_actions %} stops a job immediately if one of the steps returns an error code. For more information, see "[AUTOTITLE](/actions/using-workflows/workflow-syntax-for-github-actions#exit-codes-and-error-action-preference)."
 
 ### Job error handling
 
-{% data variables.product.prodname_actions %} uses `if` conditionals to execute jobs or steps in certain situations. For example, you can run a step when another step results in a `failure()`. For more information, see "[Workflow syntax for {% data variables.product.prodname_actions %}](/actions/reference/workflow-syntax-for-github-actions#example-using-status-check-functions)."  You can also use [`continue-on-error`](/actions/reference/workflow-syntax-for-github-actions#jobsjob_idcontinue-on-error) to prevent a workflow run from stopping when a job fails.
+{% data variables.product.prodname_actions %} uses `if` conditionals to execute jobs or steps in certain situations. For example, you can run a step when another step results in a `failure()`. For more information, see "[AUTOTITLE](/actions/using-workflows/workflow-syntax-for-github-actions#example-using-status-check-functions)."  You can also use [`continue-on-error`](/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idcontinue-on-error) to prevent a workflow run from stopping when a job fails.
 
 ## Migrating syntax for conditionals and expressions
 
-To run jobs under conditional expressions, Travis CI and {% data variables.product.prodname_actions %} share a similar `if` condition syntax. {% data variables.product.prodname_actions %} lets you use the `if` conditional to prevent a job or step from running unless a condition is met. For more information, see "[Expressions](/actions/learn-github-actions/expressions)."
+To run jobs under conditional expressions, Travis CI and {% data variables.product.prodname_actions %} share a similar `if` condition syntax. {% data variables.product.prodname_actions %} lets you use the `if` conditional to prevent a job or step from running unless a condition is met. For more information, see "[AUTOTITLE](/actions/learn-github-actions/expressions)."
 
 This example demonstrates how an `if` conditional can control whether a step is executed:
 
@@ -257,7 +258,7 @@ jobs:
 
 ## Migrating phases to steps
 
-Where Travis CI uses _phases_ to run _steps_, {% data variables.product.prodname_actions %} has _steps_ which execute _actions_. You can find prebuilt actions in the [{% data variables.product.prodname_marketplace %}](https://github.com/marketplace?type=actions), or you can create your own actions. For more information, see "[Building actions](/actions/building-actions)."
+Where Travis CI uses _phases_ to run _steps_, {% data variables.product.prodname_actions %} has _steps_ which execute _actions_. You can find prebuilt actions in the [{% data variables.product.prodname_marketplace %}](https://github.com/marketplace?type=actions), or you can create your own actions. For more information, see "[AUTOTITLE](/actions/creating-actions)."
 
 Below is an example of the syntax for each system:
 
@@ -284,26 +285,30 @@ script:
 {% endraw %}
 </td>
 <td class="d-table-cell v-align-top">
-{% raw %}
+
 ```yaml
 jobs:
   run_python:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/setup-python@v2
+      - uses: {% data reusables.actions.action-setup-python %}
         with:
           python-version: '3.7'
           architecture: 'x64'
       - run: python script.py
 ```
-{% endraw %}
+
 </td>
 </tr>
 </table>
 
 ## Caching dependencies
 
-Travis CI and {% data variables.product.prodname_actions %} let you manually cache dependencies for later reuse. This example demonstrates the cache syntax for each system.
+Travis CI and {% data variables.product.prodname_actions %} let you manually cache dependencies for later reuse.
+
+{% ifversion actions-caching %}
+
+This example demonstrates the cache syntax for each system.
 
 <table>
 <tr>
@@ -324,21 +329,25 @@ cache: npm
 {% endraw %}
 </td>
 <td class="d-table-cell v-align-top">
-{% raw %}
+
 ```yaml
 - name: Cache node modules
-  uses: actions/cache@v2
+  uses: {% data reusables.actions.action-cache %}
   with:
     path: ~/.npm
-    key: v1-npm-deps-${{ hashFiles('**/package-lock.json') }}
+    key: {% raw %}v1-npm-deps-${{ hashFiles('**/package-lock.json') }}{% endraw %}
     restore-keys: v1-npm-deps-
 ```
-{% endraw %}
+
 </td>
 </tr>
 </table>
 
-{% data variables.product.prodname_actions %} caching is only applicable for repositories hosted on {% data variables.product.prodname_dotcom_the_website %}. For more information, see "<a href="/actions/guides/caching-dependencies-to-speed-up-workflows" class="dotcom-only">Caching dependencies to speed up workflows</a>."
+{% else %}
+
+{% data reusables.actions.caching-availability %}
+
+{% endif %}
 
 ## Examples of common tasks
 
@@ -403,7 +412,7 @@ script:
 {% endraw %}
 </td>
 <td>
-{% raw %}
+
 ```yaml
 name: Node.js CI
 on: [push]
@@ -411,20 +420,20 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: {% data reusables.actions.action-checkout %}
       - name: Use Node.js
-        uses: actions/setup-node@v2
+        uses: {% data reusables.actions.action-setup-node %}
         with:
           node-version: '12.x'
       - run: npm install
       - run: npm run build
       - run: npm test
 ```
-{% endraw %}
+
 </td>
 </tr>
 </table>
 
 ## Next steps
 
-To continue learning about the main features of  {% data variables.product.prodname_actions %}, see "[Learn {% data variables.product.prodname_actions %}](/actions/learn-github-actions)."
+To continue learning about the main features of  {% data variables.product.prodname_actions %}, see "[AUTOTITLE](/actions/learn-github-actions)."

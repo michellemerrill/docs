@@ -15,7 +15,16 @@ versions:
 topics:
   - GitHub search
 ---
-{% data reusables.search.you-can-search-globally %} For more information, see "[About searching on GitHub](/search-github/getting-started-with-searching-on-github/about-searching-on-github)."
+
+{% ifversion github-code-search %}
+  {% note %}
+
+  **Note:** {% data reusables.search.classic-search-code-search-note %}
+
+  {% endnote %}
+{% endif %}
+
+{% data reusables.search.you-can-search-globally %} For more information, see "[AUTOTITLE](/search-github/getting-started-with-searching-on-github/about-searching-on-github)."
 
 You can only search code using these code search qualifiers. Search qualifiers specifically for repositories, users, or commits, will not work when searching for code.
 
@@ -27,10 +36,11 @@ Due to the complexity of searching code, there are some restrictions on how sear
 
 {% ifversion fpt or ghes or ghec %}
 - {% data reusables.search.required_login %}{% endif %}
-- Code in [forks](/pull-requests/collaborating-with-pull-requests/working-with-forks/about-forks) is only searchable if the fork has more stars than the parent repository. Forks with fewer stars than the parent repository are **not** indexed for code search. To include forks with more stars than their parent in the search results, you will need to add `fork:true` or `fork:only` to your query. For more information, see "[Searching in forks](/search-github/searching-on-github/searching-in-forks)."
+- Code in [forks](/pull-requests/collaborating-with-pull-requests/working-with-forks/about-forks) is only searchable if the fork has more stars than the parent repository. Forks with fewer stars than the parent repository are **not** indexed for code search. To include forks with more stars than their parent in the search results, you will need to add `fork:true` or `fork:only` to your query. For more information, see "[AUTOTITLE](/search-github/searching-on-github/searching-in-forks)."
 - Only the _default branch_ is indexed for code search.{% ifversion fpt or ghec %}
 - Only files smaller than 384 KB are searchable.{% else %}* Only files smaller than 5 MB are searchable.
 - Only the first 500 KB of each file is searchable.{% endif %}
+- Up to 4,000 private{% ifversion ghec or ghes or ghae %} and internal{% endif %} repositories are searchable. These 4,000 repositories will be the most recently updated of the first 10,000 private{% ifversion ghec or ghes or ghae %} and internal{% endif %} repositories that you have access to.
 - Only repositories with fewer than 500,000 files are searchable.{% ifversion fpt or ghec %}
 - Only repositories that have had activity or have been returned in search results in the last year are searchable.{% endif %}
 - Except with [`filename`](#search-by-filename) searches, you must always include at least one search term when searching source code. For example, searching for [`language:javascript`](https://github.com/search?utf8=%E2%9C%93&q=language%3Ajavascript&type=Code&ref=searchresults) is not valid, while [`amazing language:javascript`](https://github.com/search?utf8=%E2%9C%93&q=amazing+language%3Ajavascript&type=Code&ref=searchresults) is.
@@ -68,7 +78,6 @@ You can use the `path` qualifier to search for source code that appears at a spe
 | <code>path:<em>PATH/TO/DIRECTORY</em></code> | [**`console path:app/public language:javascript`**](https://github.com/search?q=console+path%3A%22app%2Fpublic%22+language%3Ajavascript&type=Code) matches JavaScript files with the word "console" in the <em>app/public</em> directory, or in any of its subdirectories (even if they reside in <em>app/public/js/form-validators</em>).
 
 ## Search by language
-<!-- If you make changes to this feature, update /getting-started-with-github/github-language-support to reflect any changes. -->
 
 You can search for code based on what language it's written in. The `language` qualifier can be the language name or alias. For a full list of supported languages with their names and aliases, see the [github/linguist repository](https://github.com/github/linguist/blob/master/lib/linguist/languages.yml).
 
@@ -88,7 +97,7 @@ You can use the `size` qualifier to search for source code based on the size of 
 
 ## Search by filename
 
-The `filename` qualifier matches code files with a certain filename. You can also find a file in a repository using the file finder. For more information, see "[Finding files on GitHub](/search-github/searching-on-github/finding-files-on-github)."
+The `filename` qualifier matches code files with a certain filename. You can also find a file in a repository using the file finder. For more information, see "[AUTOTITLE](/search-github/searching-on-github/finding-files-on-github)."
 
 | Qualifier  | Example
 | ------------- | -------------
@@ -107,6 +116,6 @@ The `extension` qualifier matches code files with a certain file extension.
 
 ## Further reading
 
-- "[Sorting search results](/search-github/getting-started-with-searching-on-github/sorting-search-results/)"
-- "[Searching in forks](/search-github/searching-on-github/searching-in-forks)"{% ifversion fpt or ghec %}
-- "[Navigating code on {% data variables.product.prodname_dotcom %}](/github/managing-files-in-a-repository/navigating-code-on-github)"{% endif %}
+- "[AUTOTITLE](/search-github/getting-started-with-searching-on-github/sorting-search-results)"
+- "[AUTOTITLE](/search-github/searching-on-github/searching-in-forks)"{% ifversion fpt or ghec %}
+- "[AUTOTITLE](/repositories/working-with-files/using-files/navigating-code-on-github)"{% endif %}

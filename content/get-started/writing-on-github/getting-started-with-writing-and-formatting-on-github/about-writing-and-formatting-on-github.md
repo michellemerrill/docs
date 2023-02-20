@@ -10,19 +10,19 @@ versions:
   ghes: '*'
   ghae: '*'
   ghec: '*'
-shortTitle: Write & format on GitHub
+shortTitle: About writing & formatting
 ---
 [Markdown](http://daringfireball.net/projects/markdown/) is an easy-to-read, easy-to-write syntax for formatting plain text.
 
 We've added some custom functionality to create {% data variables.product.prodname_dotcom %} Flavored Markdown, used to format prose and code across our site.
 
-You can also interact with other users in pull requests and issues using features like [@mentions](/articles/basic-writing-and-formatting-syntax/#mentioning-people-and-teams), [issue and PR references](/articles/basic-writing-and-formatting-syntax/#referencing-issues-and-pull-requests), and [emoji](/articles/basic-writing-and-formatting-syntax/#using-emoji).
+You can also interact with other users in pull requests and issues using features like [@mentions](/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax#mentioning-people-and-teams), [issue and PR references](/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax#referencing-issues-and-pull-requests), and [emoji](/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax#using-emoji).
 
 ## Text formatting toolbar
 
 Every comment field on {% data variables.product.product_name %} contains a text formatting toolbar, allowing you to format your text without learning Markdown syntax. In addition to Markdown formatting like bold and italic styles and creating headers, links, and lists, the toolbar includes {% data variables.product.product_name %}-specific features such as @mentions, task lists, and links to issues and pull requests.
 
-{% if fixed-width-font-gfm-fields %}
+{% ifversion fixed-width-font-gfm-fields %}
 
 ## Enabling fixed-width fonts in the editor
 
@@ -40,6 +40,6 @@ You can enable a fixed-width font in every comment field on {% data variables.pr
 ## Further reading
 
 - [{% data variables.product.prodname_dotcom %} Flavored Markdown Spec](https://github.github.com/gfm/)
-- "[Basic writing and formatting syntax](/articles/basic-writing-and-formatting-syntax)"
-- "[Working with advanced formatting](/articles/working-with-advanced-formatting)"
-- "[Mastering Markdown](https://guides.github.com/features/mastering-markdown/)"
+- "[AUTOTITLE](/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax)"
+- "[AUTOTITLE](/get-started/writing-on-github/working-with-advanced-formatting)"
+- "[AUTOTITLE](/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/quickstart-for-writing-on-github)"

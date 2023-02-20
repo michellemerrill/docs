@@ -1,13 +1,12 @@
 ---
 title: Using concurrency
-shortTitle: Using concurrency
+shortTitle: Concurrency
 intro: Run a single job at a time.
 versions:
   fpt: '*'
   ghes: '> 3.1'
   ghae: '*'
   ghec: '*'
-miniTocMaxHeadingLevel: 4
 ---
 
 {% data reusables.actions.enterprise-beta %}
@@ -17,8 +16,8 @@ miniTocMaxHeadingLevel: 4
 
 {% data reusables.actions.jobs.section-using-concurrency-jobs %}
 
-{% if github-runner-dashboard %}
+{% ifversion github-runner-dashboard %}
 ## Monitoring your current jobs in your organization or enterprise
 
-{% data reusables.github-actions.github-hosted-runners-check-concurrency %}
+{% data reusables.actions.github-hosted-runners-check-concurrency %}
 {% endif %}

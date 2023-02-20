@@ -13,7 +13,7 @@ versions:
 topics:
   - GitHub search
 ---
-You can search for users globally across all of {% data variables.product.product_name %}. For more information, see "[About searching on {% data variables.product.company_short %}](/search-github/getting-started-with-searching-on-github/about-searching-on-github)."
+You can search for users globally across all of {% data variables.product.product_name %}. For more information, see "[AUTOTITLE](/search-github/getting-started-with-searching-on-github/about-searching-on-github)."
 
 {% data reusables.search.syntax_tips %}
 
@@ -67,7 +67,7 @@ Using the `language` qualifier you can search for users based on the languages o
 | <code>language:<em>LANGUAGE</em></code> | [**language:javascript location:russia**](https://github.com/search?q=language%3Ajavascript+location%3Arussia&type=Users) matches users in Russia with a majority of their repositories written in JavaScript.
 | | [**jenny language:javascript in:fullname**](https://github.com/search?q=jenny+language%3Ajavascript+in%3Afullname&type=Users) matches users with JavaScript repositories whose full name contains the word "jenny."
 
-## Search by when a user account was created
+## Search by when a personal account was created
 
 You can filter users based on when they joined {% data variables.product.product_name %} with the `created` qualifier. This takes a date as its parameter. {% data reusables.time_date.date_format %} {% data reusables.time_date.time_format %}
 
@@ -93,7 +93,7 @@ You can filter users based on the number of followers that they have, using the 
 
 ## Search based on ability to sponsor
 
-You can search for users and organizations who can be sponsored on {% data variables.product.prodname_sponsors %} with the `is:sponsorable` qualifier. For more information, see "[About {% data variables.product.prodname_sponsors %}](/sponsors/getting-started-with-github-sponsors/about-github-sponsors)."
+You can search for users and organizations who can be sponsored on {% data variables.product.prodname_sponsors %} with the `is:sponsorable` qualifier. For more information, see "[AUTOTITLE](/sponsors/getting-started-with-github-sponsors/about-github-sponsors)."
 
 | Qualifier  | Example
 | ------------- | -------------
@@ -103,4 +103,4 @@ You can search for users and organizations who can be sponsored on {% data varia
 
 ## Further reading
 
-- "[Sorting search results](/search-github/getting-started-with-searching-on-github/sorting-search-results/)"
+- "[AUTOTITLE](/search-github/getting-started-with-searching-on-github/sorting-search-results)"

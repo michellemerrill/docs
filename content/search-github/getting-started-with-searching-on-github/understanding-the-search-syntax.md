@@ -49,7 +49,7 @@ Query  | Example
 ------------- | -------------
 <code>><em>YYYY</em>-<em>MM</em>-<em>DD</em></code> | **[cats created:>2016-04-29](https://github.com/search?utf8=%E2%9C%93&q=cats+created%3A%3E2016-04-29&type=Issues)** matches issues with the word "cats" that were created after April 29, 2016.
 <code>>=<em>YYYY</em>-<em>MM</em>-<em>DD</em></code> | **[cats created:>=2017-04-01](https://github.com/search?utf8=%E2%9C%93&q=cats+created%3A%3E%3D2017-04-01&type=Issues)** matches issues with the word "cats" that were created on or after April 1, 2017.
-<code><<em>YYYY</em>-<em>MM</em>-<em>DD</em></code> | **[cats pushed:<2012-07-05](https://github.com/search?q=cats+pushed%3A%3C2012-07-05&type=Code&utf8=%E2%9C%93)** matches code with the word "cats" in repositories that were pushed to before July 5, 2012.
+<code><<em>YYYY</em>-<em>MM</em>-<em>DD</em></code> | **[cats pushed:<2012-07-05](https://github.com/search?q=cats+pushed%3A%3C2012-07-05&type=Repositories&utf8=%E2%9C%93)** matches repositories with the word "cats" that were pushed to before July 5, 2012.
 <code><=<em>YYYY</em>-<em>MM</em>-<em>DD</em></code> | **[cats created:<=2012-07-04](https://github.com/search?utf8=%E2%9C%93&q=cats+created%3A%3C%3D2012-07-04&type=Issues)** matches issues with the word "cats" that were created on or before July 4, 2012.
 <code><em>YYYY</em>-<em>MM</em>-<em>DD</em>..<em>YYYY</em>-<em>MM</em>-<em>DD</em></code> | **[cats pushed:2016-04-30..2016-07-04](https://github.com/search?utf8=%E2%9C%93&q=cats+pushed%3A2016-04-30..2016-07-04&type=Repositories)** matches repositories with the word "cats" that were pushed to between the end of April and July of 2016.
 <code><em>YYYY</em>-<em>MM</em>-<em>DD</em>..*</code> | **[cats created:2012-04-30..*](https://github.com/search?utf8=%E2%9C%93&q=cats+created%3A2012-04-30..*&type=Issues)** matches issues created after April 30th, 2012 containing the word "cats."
@@ -86,7 +86,6 @@ If your search query contains whitespace, you will need to surround it with quot
 
 Some non-alphanumeric symbols, such as spaces, are dropped from code search queries within quotation marks, so results can be unexpected.
 
-{% ifversion fpt or ghes or ghae or ghec %}
 ## Queries with usernames
 
 If your search query contains a qualifier that requires a username, such as `user`, `actor`, or `assignee`, you can use any {% data variables.product.product_name %} username, to specify a specific person, or `@me`, to specify the current user.
@@ -97,4 +96,3 @@ Query  | Example
 `QUALIFIER:@me` | [`is:issue assignee:@me`](https://github.com/search?q=is%3Aissue+assignee%3A%40me&type=Issues) matches issues assigned to the person viewing the results
 
 You can only use `@me` with a qualifier and not as search term, such as `@me main.workflow`.
-{% endif %}
