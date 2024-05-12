@@ -56,7 +56,7 @@
     "mdast-util-from-markdown": "^1.2.0",
     "mdast-util-to-string": "^3.1.0",
     "morgan": "^1.10.0",
-    "next": "^13.5.1",
+    "next": "^14.1.1",
     "node-fetch": "^3.2.10",
     "parse5": "^6.0.1",
     "port-used": "^2.0.8",
